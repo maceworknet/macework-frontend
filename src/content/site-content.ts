@@ -2,8 +2,7 @@ export const siteContent = {
   header: {
     navigation: [
       { label: "Anasayfa", href: "/" },
-      { label: "Ürünler", href: "/#products" },
-      { label: "Çözümler", href: "/#solutions" },
+      { label: "Çözümler", href: "#solutions" },
       { label: "İşlerimiz", href: "/work" },
       { label: "Hakkımızda", href: "/#about" },
       { label: "Blog", href: "/blog" },
@@ -19,8 +18,8 @@ export const siteContent = {
     badge: "Yaratıcı Teknoloji Stüdyosu",
     title: "Sadece hizmet değil,\nbirlikte öne çıkan\nürünler geliştiriyoruz.",
     description: "Macework Creativ, ölçeklenebilir dijital altyapılar ve kendi inovatif SaaS ürünlerini tasarlayan, aynı vizyonu markanıza da taşıyan 360 derece teknoloji ajansıdır.",
-    primaryCta: { label: "Çözümleri İncele", href: "/#solutions" },
-    secondaryCta: { label: "Ürünlere Göz At", href: "/#products" },
+    primaryCta: { label: "Çözümleri İncele", href: "#solutions" },
+    secondaryCta: { label: "Ürünlere Göz At", href: "#products" },
   },
 
   products: {
@@ -79,19 +78,19 @@ export const siteContent = {
       {
         title: "Dijital Çözümler",
         items: [
-          { slug: "web-tasarim", title: "Web Tasarım", description: "Premium ve kullanıcı odaklı arayüzler", href: "/solutions/web-tasarim", iconName: "layout" },
-          { slug: "kurumsal-kimlik", title: "Kurumsal Kimlik", description: "Modern ve akılda kalıcı marka vizyonu", href: "/solutions/kurumsal-kimlik", iconName: "brush" },
-          { slug: "seo-stratejisi", title: "SEO Stratejisi", description: "Veri odaklı arama motoru optimizasyonu", href: "/solutions/seo-stratejisi", iconName: "line-chart" },
-          { slug: "sosyal-medya", title: "Sosyal Medya", description: "Yaratıcı etkileşim ve iletişim", href: "/solutions/sosyal-medya", iconName: "share-2" },
+          { slug: "web-tasarim", title: "Web Tasarım", description: "Premium ve kullanıcı odaklı arayüzler", href: "#solutions", iconName: "layout" },
+          { slug: "kurumsal-kimlik", title: "Kurumsal Kimlik", description: "Modern ve akılda kalıcı marka vizyonu", href: "#solutions", iconName: "brush" },
+          { slug: "seo-stratejisi", title: "SEO Stratejisi", description: "Veri odaklı arama motoru optimizasyonu", href: "#solutions", iconName: "line-chart" },
+          { slug: "sosyal-medya", title: "Sosyal Medya", description: "Yaratıcı etkileşim ve iletişim", href: "#solutions", iconName: "share-2" },
         ],
       },
       {
         title: "Teknoloji Çözümleri",
         items: [
-          { slug: "web-yazilim", title: "Web Yazılım", description: "Güvenli ve ölçeklenebilir altyapılar", href: "/solutions/web-yazilim", iconName: "code" },
-          { slug: "e-ticaret", title: "E-Ticaret", description: "Dönüşüm odaklı online satış sistemleri", href: "/solutions/e-ticaret", iconName: "shopping-bag" },
-          { slug: "api-integrasyonlari", title: "API Entegrasyonları", description: "Kusursuz sistem bağlantıları", href: "/solutions/api-integrasyonlari", iconName: "network" },
-          { slug: "saas-gelistirme", title: "SaaS Geliştirme", description: "Fikirden ürüne özel yazılım projeleri", href: "/solutions/saas-gelistirme", iconName: "box" },
+          { slug: "web-yazilim", title: "Web Yazılım", description: "Güvenli ve ölçeklenebilir altyapılar", href: "#solutions", iconName: "code" },
+          { slug: "e-ticaret", title: "E-Ticaret", description: "Dönüşüm odaklı online satış sistemleri", href: "#solutions", iconName: "shopping-bag" },
+          { slug: "api-integrasyonlari", title: "API Entegrasyonları", description: "Kusursuz sistem bağlantıları", href: "#solutions", iconName: "network" },
+          { slug: "saas-gelistirme", title: "SaaS Geliştirme", description: "Fikirden ürüne özel yazılım projeleri", href: "#solutions", iconName: "box" },
         ],
       },
     ],
@@ -123,6 +122,44 @@ export const siteContent = {
         features: ["Shopify & Custom Entegrasyon", "Ödeme Sistemleri", "Stok Yönetimi", "SEO Odaklı Kategori Yapısı"],
     }
   ],
+
+  blog: {
+    items: [
+      {
+        slug: "saas-ux-tasarimi",
+        title: "SaaS Dünyasında UX Tasarımının Dönüşüm Oranlarına Etkisi",
+        excerpt: "Neden bazı SaaS ürünleri milyonlarca kullanıcıya ulaşırken bazıları ilk ayda veda ediyor? Yanıt kullanıcı deneyiminde gizli.",
+        content: `
+            <p>SaaS (Software as a Service) modellerinde kullanıcıyı elde tutmak (retention) ve dönüşümü artırmak için uygulanan tasarım prensipleri, projenin geleceğini belirler. Kullanıcı deneyimi, sadece bir arayüz tasarımından ibaret değildir; kullanıcının problemine ne kadar hızlı ve zahmetsiz yanıt verdiğinizdir.</p>
+            <br/>
+            <h3 class="text-2xl font-bold">1. Onboarding Sürecinde Basitlik</h3>
+            <p>Kullanıcıların ürünü ilk açtığı andaki deneyim, ürünü kullanmaya devam edip etmeyeceklerini belirleyen en kritik andır. Karmaşık formlar ve uzun eğitim videoları yerine, "interaktif adımlar" (guided tours) sunmak dönüşümü %40 oranında artırabilir.</p>
+            <br/>
+            <h3 class="text-2xl font-bold">2. Veri Görselleştirme</h3>
+            <p>Karmaşık verileri anlamlı tablolara ve grafiklere dönüştürmek, kullanıcının değer algısını güçlendirir. Özellikle analitik araçlarında bu durum hayati önem taşır.</p>
+        `,
+        date: "25 Mart 2026",
+        author: "Yaser Köse",
+        category: "Tasarım",
+        readTime: "6 dk okuma"
+      },
+      {
+        slug: "nextjs-16-gelecek",
+        title: "Next.js 16 ile Geleceğin Web Uygulamalarını İnşa Etmek",
+        excerpt: "Modern web geliştirme süreçlerinde performans ve SEO dengesi nasıl kurulur? Next.js'in yeni özelliklerini inceliyoruz.",
+        content: `
+            <p>Web teknolojileri her geçen gün hızlanıyor. Takip etmesi güç olsa da, Next.js ekosistemi sunduğu yeniliklerle geliştiricilere muazzam bir esneklik sağlıyor. Özellikle Turbopack entegrasyonu ve gelişmiş RSC (React Server Components) desteği, Next.js 16 sürümünü bugüne kadarki en güçlü sürüm yapıyor.</p>
+            <br/>
+            <h3 class="text-2xl font-bold">Hız Her Şeydir</h3>
+            <p>Kullanıcılar 3 saniyeden uzun süren açılışlardan hoşlanmıyor. Yeni nesil render stratejileri ile biz Macework olarak projelerimizde milisaniyeler seviyesinde ilk boyama sürelerini hedefliyoruz.</p>
+        `,
+        date: "18 Mart 2026",
+        author: "Macework Tech Team",
+        category: "Teknoloji",
+        readTime: "8 dk okuma"
+      }
+    ]
+  },
 
   works: {
     sectionTitle: "Seçkin İşlerimiz",

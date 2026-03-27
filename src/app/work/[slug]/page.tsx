@@ -41,7 +41,7 @@ export default function WorkDetailPage() {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-8xl font-black tracking-tighter mb-6 text-gradient"
+            className="text-5xl font-black tracking-tighter mb-6 text-gradient"
           >
             {work.title}
           </motion.h1>

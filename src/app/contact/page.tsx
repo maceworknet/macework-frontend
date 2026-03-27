@@ -38,7 +38,7 @@ export default function ContactPage() {
           >
             <motion.h1 
               variants={item}
-              className="text-5xl md:text-7xl font-black tracking-tighter mb-6 text-gradient"
+              className="text-5xl font-black tracking-tighter mb-6 text-gradient"
             >
               Bize Ulaşın
             </motion.h1>
