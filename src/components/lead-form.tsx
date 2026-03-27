@@ -18,7 +18,7 @@ export function LeadForm() {
 
   if (status === "success") {
     return (
-      <div className="bg-board border border-border p-12 rounded-3xl text-center space-y-6 max-w-2xl mx-auto">
+      <div className="bg-card border border-border p-12 rounded-3xl text-center space-y-6 max-w-2xl mx-auto shadow-sm">
         <div className="w-16 h-16 bg-green-500/20 text-green-500 rounded-full flex items-center justify-center mx-auto">
           <CheckCircle2 className="w-8 h-8" />
         </div>
@@ -47,7 +47,7 @@ export function LeadForm() {
             </p>
           </div>
 
-          <form onSubmit={handleSubmit} className="bg-board border border-border p-8 md:p-12 rounded-3xl shadow-2xl relative overflow-hidden group">
+          <form onSubmit={handleSubmit} className="bg-card border border-border p-8 md:p-12 rounded-3xl shadow-xl relative overflow-hidden group">
             <div className="absolute top-0 right-0 w-64 h-64 bg-macework/5 blur-[80px] -mr-32 -mt-32"></div>
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">

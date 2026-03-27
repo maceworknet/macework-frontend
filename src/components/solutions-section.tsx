@@ -20,7 +20,7 @@ export function SolutionsSection() {
   const allSolutions = siteContent.solutionsMegaMenu.columns.flatMap(col => col.items);
 
   return (
-    <section id="solutions" className="py-24 bg-muted/30">
+    <section id="solutions" className="py-24 bg-muted/50">
       <div className="container">
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Kapsamlı Dijital Çözümler</h2>
@@ -35,7 +35,7 @@ export function SolutionsSection() {
             return (
               <div 
                 key={idx} 
-                className="group p-6 rounded-2xl border border-border bg-background hover:bg-board transition-all duration-300"
+                className="group p-6 rounded-2xl border border-border bg-card hover:bg-muted/50 transition-all duration-300"
               >
                 <div className="w-12 h-12 rounded-xl bg-macework/10 flex items-center justify-center text-macework mb-6 group-hover:scale-110 transition-transform">
                   <Icon className="w-6 h-6" />

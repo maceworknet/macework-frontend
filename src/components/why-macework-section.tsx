@@ -41,7 +41,7 @@ export function WhyMaceworkSection() {
           
           <div className="relative">
             <div className="absolute inset-0 bg-macework/10 blur-[100px] rounded-full"></div>
-            <div className="relative border border-border bg-board p-8 rounded-3xl overflow-hidden">
+            <div className="relative border border-border bg-card p-8 rounded-3xl overflow-hidden shadow-sm">
               <div className="space-y-6">
                  <div className="flex items-center gap-4 border-b border-border pb-6">
                     <div className="w-12 h-12 rounded-full bg-muted flex items-center justify-center font-bold text-macework">M</div>

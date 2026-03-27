@@ -15,7 +15,7 @@ export function ProductCard({ title, description, badge, href, category }: Produ
     <Link 
       href={href} 
       target="_blank"
-      className="group relative flex flex-col h-full p-8 rounded-3xl bg-board border border-border hover:border-macework/50 transition-all duration-300 hover:shadow-2xl hover:shadow-macework/5 overflow-hidden"
+      className="group relative flex flex-col h-full p-8 rounded-3xl bg-card border border-border hover:border-macework/50 transition-all duration-300 hover:shadow-2xl hover:shadow-macework/5 overflow-hidden"
     >
       <div className="absolute top-0 right-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity">
         <ArrowUpRight className="w-5 h-5 text-macework" />
