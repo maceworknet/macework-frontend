@@ -31,7 +31,7 @@ export function Hero() {
           variants={container}
           initial="hidden"
           animate="show"
-          className="flex flex-col items-center text-center max-w-5xl mx-auto"
+          className="flex flex-col items-center text-center max-w-5xl mx-auto relative -top-20"
         >
           {/* Badge */}
           <motion.div variants={item} className="mb-10">
@@ -48,7 +48,7 @@ export function Hero() {
           {/* Title */}
           <motion.h1 
             variants={item}
-            className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground mb-8 whitespace-pre-line leading-[1.1] text-gradient"
+            className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground mb-8 whitespace-pre-line leading-[1.2] text-gradient pb-2"
           >
             {siteContent.hero.title.replace(/\n/g, ' ')}
           </motion.h1>
@@ -89,7 +89,7 @@ export function Hero() {
              <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground/50 mb-10 text-center">
                REFERANSLARIMIZ & ÜRÜNLERİMİZ
              </p>
-             <div className="relative">
+             <div className="relative group/slider [mask-image:linear-gradient(to_right,transparent,black_15%,black_85%,transparent)]">
                 <div className="flex w-fit gap-16 items-center animate-marquee whitespace-nowrap">
                    {[...Array(4)].map((_, i) => (
                       <div key={i} className="flex gap-16 items-center">
@@ -101,9 +101,6 @@ export function Hero() {
                       </div>
                    ))}
                 </div>
-                {/* Gradient Fades for Slider */}
-                <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background to-transparent z-10" />
-                <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent z-10" />
              </div>
           </motion.div>
         </motion.div>
