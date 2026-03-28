@@ -1,6 +1,11 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "./ui/card";
+import { Badge } from "./ui/badge";
+import { siteContent } from "@/content/site-content";
 
 interface ProductCardProps {
   title: string;
@@ -15,50 +20,53 @@ export function ProductCard({ title, description, badge, href, category, slug }:
   return (
     <Link 
       href={`/products/${slug}`} 
-      className="group relative flex flex-col h-full p-8 rounded-3xl bg-card border border-border hover:border-macework/50 transition-all duration-300 hover:shadow-2xl hover:shadow-macework/5 overflow-hidden"
+      className="group h-full"
     >
-      <div className="absolute top-0 right-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity">
-        <ArrowUpRight className="w-5 h-5 text-macework" />
-      </div>
-
-      <div className="mb-auto">
-        <div className="flex items-center justify-between mb-4">
-          <span className="text-xs font-bold uppercase tracking-widest text-macework bg-macework/10 px-3 py-1 rounded-full">
-            {badge}
-          </span>
-          <span className="text-xs font-medium text-muted-foreground">
-            {category}
-          </span>
+      <Card className="h-full border-border/60 hover:border-macework/50 transition-all duration-300 rounded-xl overflow-hidden flex flex-col shadow-none hover:shadow-md">
+        <div className="absolute top-0 right-0 p-6 opacity-0 group-hover:opacity-100 transition-opacity">
+          <ArrowUpRight className="w-5 h-5 text-macework" />
         </div>
-        
-        <h3 className="text-2xl font-bold text-foreground mb-3 group-hover:text-macework transition-colors">
-          {title}
-        </h3>
-        
-        <p className="text-muted-foreground text-sm leading-relaxed">
-          {description}
-        </p>
-      </div>
 
-      <div className="mt-8 flex items-center gap-2 text-sm font-semibold text-foreground">
-        Platformu İncele
-        <div className="h-px flex-1 bg-border group-hover:bg-macework/20 transition-colors" />
-      </div>
+        <CardHeader className="pb-4">
+          <div className="flex items-center justify-between mb-4">
+            <Badge variant="secondary" className="bg-macework/10 text-macework border-none text-[10px] uppercase tracking-widest px-2 shadow-none">
+              {badge}
+            </Badge>
+            <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">
+              {category}
+            </span>
+          </div>
+          <CardTitle className="text-xl font-bold tracking-tight group-hover:text-macework transition-colors leading-tight">
+            {title}
+          </CardTitle>
+        </CardHeader>
+        
+        <CardContent className="flex-1">
+          <p className="text-muted-foreground text-sm leading-relaxed">
+            {description}
+          </p>
+        </CardContent>
+
+        <CardFooter className="pt-0 pb-6 mt-auto">
+          <div className="flex items-center gap-2 text-sm font-semibold text-foreground w-full">
+            <span className="text-xs">Platformu İncele</span>
+            <div className="h-px flex-1 bg-border group-hover:bg-macework/20 transition-colors" />
+          </div>
+        </CardFooter>
+      </Card>
     </Link>
   );
 }
-
-import { siteContent } from "@/content/site-content";
 
 export function ProductsSection() {
   return (
     <section id="products" className="py-24 bg-background">
       <div className="container">
-        <div className="max-w-3xl mb-16">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight mb-4">
+        <div className="max-w-3xl mb-16 space-y-4">
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
             {siteContent.products.sectionTitle}
           </h2>
-          <p className="text-lg text-muted-foreground">
+          <p className="text-lg text-muted-foreground font-normal leading-relaxed">
             {siteContent.products.sectionDescription}
           </p>
         </div>
@@ -72,3 +80,4 @@ export function ProductsSection() {
     </section>
   );
 }
+

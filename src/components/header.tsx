@@ -9,6 +9,7 @@ import { MobileNav } from "./mobile-nav";
 import { ArrowRight, Menu } from "lucide-react";
 import { ModeToggle } from "./mode-toggle";
 import { motion, AnimatePresence } from "framer-motion";
+import { Button } from "./ui/button";
 
 export function Header() {
   const [scrolled, setScrolled] = useState(false);
@@ -35,10 +36,10 @@ export function Header() {
 
   return (
     <>
-      {/* Mobile Drawer (Always outside any transform/clip) */}
+      {/* Mobile Drawer */}
       <MobileNav isOpen={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen} />
 
-      <div className="fixed top-0 inset-x-0 z-50 flex justify-center pt-6 px-4 pointer-events-none">
+      <div className="fixed top-0 inset-x-0 z-50 flex justify-center pt-4 px-4 pointer-events-none">
         <AnimatePresence>
           {isVisible && (
             <motion.header
@@ -47,25 +48,25 @@ export function Header() {
               exit={{ y: -100, opacity: 0 }}
               transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
               className={cn(
-                "w-full max-w-7xl h-16 rounded-full transition-all duration-300 border border-border/40 backdrop-blur-md pointer-events-auto",
+                "w-full max-w-7xl h-14 rounded-full transition-all duration-300 border border-border/40 backdrop-blur-md pointer-events-auto",
                 scrolled
-                  ? "bg-background/80 shadow-lg shadow-black/5"
+                  ? "bg-background/80 shadow-sm"
                   : "bg-background/40"
               )}
             >
-              <div className="container h-full flex items-center justify-between">
+              <div className="container h-full flex items-center justify-between px-6">
                 {/* Logo */}
                 <div className="flex-1 lg:flex-none">
                   <Link href="/" className="flex items-center gap-2 group">
-                    <span className="text-xl font-bold tracking-tighter font-logo">
+                    <span className="text-lg font-bold tracking-tighter">
                       Macework<span className="text-macework">.</span>
                     </span>
                   </Link>
                 </div>
 
-                {/* Desktop Nav - Centered */}
+                {/* Desktop Nav */}
                 <nav className="hidden lg:flex items-center absolute left-1/2 -translate-x-1/2">
-                  <div className="flex items-center gap-1.5 px-1.5 py-1 rounded-full">
+                  <div className="flex items-center gap-1">
                     {siteContent.header.navigation.map((item) => (
                       item.label === "Çözümler" ? (
                         <MegaMenu key={item.label} label={item.label} />
@@ -73,7 +74,7 @@ export function Header() {
                         <Link
                           key={item.label}
                           href={item.href}
-                          className="text-[13px] font-semibold px-4 py-2 rounded-full text-foreground/70 hover:text-foreground hover:bg-muted/60 transition-all"
+                          className="text-sm font-medium px-4 py-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-muted/50 transition-all font-sans"
                         >
                           {item.label}
                         </Link>
@@ -83,24 +84,25 @@ export function Header() {
                 </nav>
 
                 {/* Actions */}
-                <div className="flex items-center gap-3 flex-1 lg:flex-none justify-end">
+                <div className="flex items-center gap-2 flex-1 lg:flex-none justify-end">
                   <ModeToggle />
-                  <Link
-                    href={siteContent.header.cta.href}
-                    className="hidden md:flex items-center gap-2 bg-foreground text-background dark:bg-zinc-100 dark:text-zinc-950 hover:bg-foreground/90 transition-all px-6 py-2.5 rounded-full text-xs font-bold shadow-sm"
-                  >
-                    {siteContent.header.cta.label}
-                    <ArrowRight className="w-4 h-4" />
-                  </Link>
+                  <Button asChild size="sm" className="hidden md:flex rounded-full px-5 text-sm">
+                    <Link href={siteContent.header.cta.href}>
+                      {siteContent.header.cta.label}
+                      <ArrowRight className="ml-2 w-4 h-4" />
+                    </Link>
+                  </Button>
 
                   {/* Mobile Nav Button */}
                   <div className="lg:hidden">
-                    <button 
+                    <Button 
+                       variant="ghost"
+                       size="icon-sm"
                        onClick={() => setIsMobileMenuOpen(true)}
-                       className="p-2 -mr-2 hover:bg-muted transition-colors rounded-full"
+                       className="rounded-full"
                     >
-                       <Menu className="w-6 h-6" />
-                    </button>
+                       <Menu className="w-5 h-5" />
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -111,3 +113,4 @@ export function Header() {
     </>
   );
 }
+

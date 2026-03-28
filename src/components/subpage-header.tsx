@@ -22,22 +22,22 @@ export function SubPageHeader({ badge, title, description, children, className }
       <div className="container relative z-10">
         <div className="max-w-4xl">
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5 }}
           >
             {badge && (
-              <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-macework/10 border border-macework/20 text-[10px] font-bold text-macework uppercase tracking-widest mb-6">
+              <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-macework/10 border border-macework/20 text-[11px] font-medium text-macework uppercase tracking-widest mb-6">
                 {badge}
               </span>
             )}
             
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tighter mb-6 text-gradient leading-[1.1]">
+            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight mb-6 text-gradient leading-[1.1]">
               {title}
             </h1>
             
             {description && (
-              <p className="text-base md:text-lg text-muted-foreground font-medium max-w-2xl leading-relaxed">
+              <p className="text-base md:text-lg text-muted-foreground font-normal max-w-2xl leading-relaxed">
                 {description}
               </p>
             )}
@@ -53,3 +53,4 @@ export function SubPageHeader({ badge, title, description, children, className }
     </section>
   );
 }
+

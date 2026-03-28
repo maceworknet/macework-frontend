@@ -5,6 +5,7 @@ import Link from "next/link";
 import { ArrowRight, MoveRight, ChevronRight } from "lucide-react";
 import { InfiniteGrid } from "./ui/the-infinite-grid";
 import { motion } from "framer-motion";
+import { Button } from "./ui/button";
 
 const container = {
   hidden: { opacity: 0 },
@@ -36,7 +37,7 @@ export function Hero() {
           <motion.div variants={item} className="mb-10">
             <Link 
               href="#products" 
-              className="inline-flex items-center gap-2 rounded-full border border-border/40 bg-muted/30 px-4 py-1.5 text-xs font-semibold text-muted-foreground hover:border-macework/30 hover:text-foreground transition-all backdrop-blur-md group"
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-4 py-1.5 text-[13px] font-medium text-muted-foreground hover:bg-muted/80 hover:text-foreground transition-all backdrop-blur-sm group"
             >
               <div className="w-1.5 h-1.5 rounded-full bg-macework animate-pulse" />
               {siteContent.hero.badge}
@@ -47,7 +48,7 @@ export function Hero() {
           {/* Title */}
           <motion.h1 
             variants={item}
-            className="text-5xl font-black tracking-tighter text-foreground mb-8 whitespace-pre-line leading-[1.1] text-gradient"
+            className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground mb-8 whitespace-pre-line leading-[1.1] text-gradient"
           >
             {siteContent.hero.title.replace(/\n/g, ' ')}
           </motion.h1>
@@ -55,7 +56,7 @@ export function Hero() {
           {/* Description */}
           <motion.p 
             variants={item}
-            className="text-xl md:text-2xl text-muted-foreground mb-12 leading-relaxed max-w-2xl font-medium"
+            className="text-lg md:text-xl text-muted-foreground mb-12 leading-relaxed max-w-2xl font-normal"
           >
             {siteContent.hero.description}
           </motion.p>
@@ -63,36 +64,34 @@ export function Hero() {
           {/* CTAs */}
           <motion.div 
             variants={item}
-            className="flex flex-col sm:flex-row items-center gap-6"
+            className="flex flex-col sm:flex-row items-center gap-4"
           >
-            <Link 
-              href={siteContent.hero.primaryCta.href}
-              className="w-full sm:w-auto inline-flex justify-center items-center gap-2 bg-macework text-white hover:bg-macework-hover transition-all px-10 py-5 rounded-full text-base font-bold shadow-2xl shadow-macework/40 shadow-spread hover:scale-[1.03] active:scale-95 group"
-            >
-              {siteContent.hero.primaryCta.label}
-              <MoveRight className="w-5 h-5 group-hover:translate-x-1.5 transition-transform" />
-            </Link>
+            <Button asChild size="lg" className="h-14 px-10 rounded-full bg-macework hover:bg-macework-hover text-white shadow-lg shadow-macework/20">
+              <Link href={siteContent.hero.primaryCta.href}>
+                {siteContent.hero.primaryCta.label}
+                <MoveRight className="ml-2 w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
+              </Link>
+            </Button>
             
-            <Link 
-              href={siteContent.hero.secondaryCta.href}
-              className="w-full sm:w-auto inline-flex justify-center items-center gap-2 bg-transparent border border-border/50 text-foreground hover:bg-muted/30 hover:border-macework/20 transition-all px-10 py-5 rounded-full text-base font-bold backdrop-blur-sm"
-            >
-              {siteContent.hero.secondaryCta.label}
-              <ArrowRight className="w-4 h-4 text-muted-foreground" />
-            </Link>
+            <Button asChild variant="outline" size="lg" className="h-14 px-10 rounded-full border-border/50 backdrop-blur-sm bg-background/50">
+              <Link href={siteContent.hero.secondaryCta.href}>
+                {siteContent.hero.secondaryCta.label}
+                <ArrowRight className="ml-2 w-4 h-4 text-muted-foreground" />
+              </Link>
+            </Button>
           </motion.div>
 
-          {/* Brands / Proof - Premium Detail */}
+          {/* Brands */}
           <motion.div 
              variants={item}
-             className="mt-24 pt-10 border-t border-border/10 w-full"
+             className="mt-24 pt-12 border-t border-border/10 w-full"
           >
-             <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground/60 mb-8">
+             <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground/50 mb-8">
                REFERANSLARIMIZ & ÜRÜNLERİMİZ
              </p>
-             <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8 grayscale opacity-40 hover:opacity-70 transition-opacity">
+             <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8 opacity-40 hover:opacity-100 transition-opacity">
                 {["Qrgetir", "Carigetir", "SociaMind", "byoo.pro"].map((p, i) => (
-                  <span key={i} className="text-lg font-black tracking-tighter">{p}</span>
+                  <span key={i} className="text-xl font-bold tracking-tight">{p}</span>
                 ))}
              </div>
           </motion.div>
@@ -101,3 +100,4 @@ export function Hero() {
     </InfiniteGrid>
   );
 }
+
