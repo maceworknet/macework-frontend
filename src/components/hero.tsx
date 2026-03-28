@@ -48,7 +48,7 @@ export function Hero() {
           {/* Title */}
           <motion.h1 
             variants={item}
-            className="text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight text-foreground mb-8 whitespace-pre-line leading-[1.1] text-gradient"
+            className="text-4xl md:text-6xl lg:text-7xl font-extrabold tracking-tight text-foreground mb-8 whitespace-pre-line leading-[1.1] text-gradient"
           >
             {siteContent.hero.title.replace(/\n/g, ' ')}
           </motion.h1>
@@ -56,7 +56,7 @@ export function Hero() {
           {/* Description */}
           <motion.p 
             variants={item}
-            className="text-lg md:text-xl text-muted-foreground mb-12 leading-relaxed max-w-2xl font-normal"
+            className="text-base md:text-lg text-muted-foreground mb-12 leading-relaxed max-w-3xl font-medium"
           >
             {siteContent.hero.description}
           </motion.p>
@@ -66,14 +66,14 @@ export function Hero() {
             variants={item}
             className="flex flex-col sm:flex-row items-center gap-4"
           >
-            <Button asChild size="lg" className="h-14 px-10 rounded-full bg-macework hover:bg-macework-hover text-white shadow-lg shadow-macework/20">
+            <Button asChild size="lg" className="h-12 px-8 rounded-full bg-macework hover:bg-macework-hover text-white shadow-[0_10px_30px_-10px_rgba(225,29,72,0.4)] transition-all hover:scale-[1.02] active:scale-[0.98]">
               <Link href={siteContent.hero.primaryCta.href}>
                 {siteContent.hero.primaryCta.label}
                 <MoveRight className="ml-2 w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
               </Link>
             </Button>
             
-            <Button asChild variant="outline" size="lg" className="h-14 px-10 rounded-full border-border/50 backdrop-blur-sm bg-background/50">
+            <Button asChild variant="outline" size="lg" className="h-12 px-8 rounded-full border-border/50 backdrop-blur-sm bg-background/50 hover:bg-muted/50 transition-all hover:scale-[1.02] active:scale-[0.98]">
               <Link href={siteContent.hero.secondaryCta.href}>
                 {siteContent.hero.secondaryCta.label}
                 <ArrowRight className="ml-2 w-4 h-4 text-muted-foreground" />
@@ -81,18 +81,29 @@ export function Hero() {
             </Button>
           </motion.div>
 
-          {/* Brands */}
+          {/* Brands Slider */}
           <motion.div 
              variants={item}
-             className="mt-24 pt-12 border-t border-border/10 w-full"
+             className="mt-24 w-full max-w-4xl mx-auto overflow-hidden pause-marquee"
           >
-             <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground/50 mb-8">
+             <p className="text-[10px] font-bold uppercase tracking-[0.3em] text-muted-foreground/50 mb-10 text-center">
                REFERANSLARIMIZ & ÜRÜNLERİMİZ
              </p>
-             <div className="flex flex-wrap justify-center items-center gap-x-12 gap-y-8 opacity-40 hover:opacity-100 transition-opacity">
-                {["Qrgetir", "Carigetir", "SociaMind", "byoo.pro"].map((p, i) => (
-                  <span key={i} className="text-xl font-bold tracking-tight">{p}</span>
-                ))}
+             <div className="relative">
+                <div className="flex w-fit gap-16 items-center animate-marquee whitespace-nowrap">
+                   {[...Array(4)].map((_, i) => (
+                      <div key={i} className="flex gap-16 items-center">
+                         {["Qrgetir", "Carigetir", "SociaMind", "byoo.pro"].map((p, j) => (
+                            <span key={`${i}-${j}`} className="text-xl md:text-2xl font-bold tracking-tight text-foreground/40 hover:text-foreground transition-colors cursor-default select-none">
+                               {p}
+                            </span>
+                         ))}
+                      </div>
+                   ))}
+                </div>
+                {/* Gradient Fades for Slider */}
+                <div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-background to-transparent z-10" />
+                <div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-background to-transparent z-10" />
              </div>
           </motion.div>
         </motion.div>
