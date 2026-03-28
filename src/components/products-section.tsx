@@ -60,7 +60,7 @@ export function ProductCard({ title, description, badge, href, category, slug }:
 
 export function ProductsSection() {
   return (
-    <section id="products" className="pb-24 pt-0 bg-background">
+    <section id="products" className="py-24 bg-background">
       <div className="container">
         <div className="max-w-3xl mx-auto mb-16 space-y-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight">

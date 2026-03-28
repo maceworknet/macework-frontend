@@ -38,6 +38,8 @@ export const metadata: Metadata = {
 };
 
 import { Header } from "@/components/header";
+import { Footer } from "@/components/footer";
+import { ScrollToTop } from "@/components/scroll-to-top";
 import { ThemeProvider } from "@/components/theme-provider";
 
 export default function RootLayout({
@@ -62,6 +64,8 @@ export default function RootLayout({
           <main className="flex-1 flex flex-col">
             {children}
           </main>
+          <Footer />
+          <ScrollToTop />
         </ThemeProvider>
       </body>
     </html>

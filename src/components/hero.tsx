@@ -25,7 +25,7 @@ const item = {
 
 export function Hero() {
   return (
-    <InfiniteGrid className="pt-52 pb-12 lg:pt-64 lg:pb-16 w-full flex flex-col justify-center">
+    <InfiniteGrid className="pt-52 pb-16 lg:pt-64 lg:pb-24 w-full flex flex-col justify-center">
       <div className="container relative z-10">
         <motion.div 
           variants={container}

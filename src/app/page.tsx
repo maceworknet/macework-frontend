@@ -5,7 +5,6 @@ import { WorkSection } from "@/components/work-section";
 import { WhyMaceworkSection } from "@/components/why-macework-section";
 import { ProcessSection } from "@/components/process-section";
 import { LeadForm } from "@/components/lead-form";
-import { Footer } from "@/components/footer";
 
 export default function Home() {
   return (
@@ -17,7 +16,6 @@ export default function Home() {
       <WhyMaceworkSection />
       <ProcessSection />
       <LeadForm />
-      <Footer />
     </>
   );
 }
