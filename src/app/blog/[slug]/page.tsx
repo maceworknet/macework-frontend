@@ -8,7 +8,7 @@ import { ShareButtons } from "@/components/share-buttons";
 
 
 
-const StrapiBlocks = ({ content }) => {
+const StrapiBlocks = ({ content }: { content: any[] | null }) => {
   if (!content || !Array.isArray(content)) return null;
   return content.map((block, i) => {
     if (block.type === 'paragraph') {

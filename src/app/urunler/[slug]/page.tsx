@@ -7,7 +7,7 @@ import { fetchStrapi, getStrapiMedia } from "@/lib/strapi";
 
 
 
-const StrapiBlocks = ({ content }) => {
+const StrapiBlocks = ({ content }: { content: any[] | null }) => {
   if (!content || !Array.isArray(content)) return null;
   return content.map((block, i) => {
     if (block.type === 'paragraph') {
