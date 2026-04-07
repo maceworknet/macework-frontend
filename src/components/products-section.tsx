@@ -5,8 +5,6 @@ import { ArrowUpRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Card, CardHeader, CardTitle, CardContent, CardFooter } from "./ui/card";
 import { Badge } from "./ui/badge";
-import { siteContent } from "@/content/site-content";
-
 interface ProductCardProps {
   title: string;
   description: string;
@@ -58,26 +56,35 @@ export function ProductCard({ title, description, badge, href, category, slug }:
   );
 }
 
-export function ProductsSection() {
+export function ProductsSection({ products, heading }: { products: any[], heading?: string }) {
   return (
     <section id="urunler" className="py-24 bg-background">
       <div className="container">
         <div className="max-w-3xl mx-auto mb-16 space-y-4 text-center">
           <h2 className="text-3xl md:text-4xl font-bold tracking-tight">
-            {siteContent.products.sectionTitle}
+            {heading || "Kendi Ürünlerimiz"}
           </h2>
           <p className="text-lg text-muted-foreground font-normal leading-relaxed">
-            {siteContent.products.sectionDescription}
+            Macework imzasıyla geliştirdiğimiz ve aktif olarak büyüyen dijital ürün ekosistemimizi keşfedin.
           </p>
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-          {siteContent.products.items.map((product) => (
-            <ProductCard key={product.id} {...product} />
+          {products?.map((product, i) => (
+            <ProductCard 
+              key={product.documentId || product.id || i}
+              title={product.title}
+              description={product.description}
+              badge="ÜRÜN"
+              href={product.platform_url || `#`}
+              category={product.tag}
+              slug={product.slug}
+            />
           ))}
         </div>
       </div>
     </section>
   );
 }
+
 

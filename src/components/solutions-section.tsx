@@ -1,44 +1,29 @@
 "use client";
 
-import { siteContent } from "@/content/site-content";
-import { Layout, Brush, LineChart, Share2, Code, ShoppingBag, Network, Box, Smartphone, Calculator, Brain, ArrowUpRight } from "lucide-react";
+import * as LucideIcons from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import Link from "next/link";
 import { Card, CardHeader, CardTitle, CardContent } from "./ui/card";
 
-const icons: Record<string, React.ElementType> = {
-  "layout": Layout,
-  "brush": Brush,
-  "line-chart": LineChart,
-  "share-2": Share2,
-  "code": Code,
-  "shopping-bag": ShoppingBag,
-  "network": Network,
-  "box": Box,
-  "smartphone": Smartphone,
-  "calculator": Calculator,
-  "brain": Brain
-};
-
-export function SolutionsSection() {
-  const allSolutions = siteContent.solutionsMegaMenu.columns.flatMap(col => col.items);
+export function SolutionsSection({ solutions, heading }: { solutions: any[], heading?: string }) {
 
   return (
     <section id="cozumler" className="py-24 bg-muted/30">
       <div className="container">
         <div className="text-center max-w-3xl mx-auto mb-16 space-y-4">
-          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Kapsamlı Dijital Çözümler</h2>
+          <h2 className="text-3xl md:text-4xl font-bold tracking-tight">{heading || "Kapsamlı Dijital Çözümler"}</h2>
           <p className="text-lg text-muted-foreground font-normal">
             İşletmenizin dijital dönüşüm yolculuğunda her adımda yanınızdayız. Stratejiden tasarıma, yazımdan büyümeye kadar tam hizmet.
           </p>
         </div>
 
         <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {allSolutions.map((solution, idx) => {
-            const Icon = icons[solution.iconName] || Code;
+          {solutions?.map((solution, idx) => {
+            const Icon = (LucideIcons as any)[solution.icon] || LucideIcons.Code;
             return (
               <Link 
-                key={idx} 
-                href={solution.href}
+                key={solution.documentId || idx} 
+                href={`/cozumler/${solution.slug}`}
                 className="group h-full"
               >
                 <Card className="h-full border-border/60 hover:border-macework/50 transition-all duration-300 relative overflow-hidden flex flex-col rounded-xl shadow-none hover:shadow-sm">
@@ -54,7 +39,7 @@ export function SolutionsSection() {
                   </CardHeader>
                   <CardContent>
                     <p className="text-sm text-muted-foreground leading-relaxed">
-                      {solution.description}
+                      {solution.short_description || solution.description}
                     </p>
                   </CardContent>
                 </Card>

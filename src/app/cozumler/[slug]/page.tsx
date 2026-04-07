@@ -1,32 +1,38 @@
-"use client"
-
-import { useParams } from "next/navigation";
-import { siteContent } from "@/content/site-content";
-import { CheckCircle2, MoveRight, ArrowRight, Layout, Brush, Code, Smartphone } from "lucide-react";
-import { motion } from "framer-motion";
-import { SubPageHeader } from "@/components/subpage-header";
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { cn } from "@/lib/utils";
+import Link from "next/link";
+import { SubPageHeader } from "@/components/subpage-header";
+import { ArrowRight, CheckCircle2, MoveRight } from "lucide-react";
+import { fetchStrapi, getStrapiMedia } from "@/lib/strapi";
 
-const processIcons = [Layout, Brush, Code, Smartphone];
 
-export default function SolutionDetailPage() {
-  const { slug } = useParams();
-  const solution = siteContent.solutionsDetail.find((item: any) => item.slug === slug);
+export default async function SolutionDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+
+  const [solutions, homePage, templates] = await Promise.all([
+    fetchStrapi<any[]>("solutions", { populate: '*', filters: { slug } }),
+    fetchStrapi<any>("home-page", { populate: '*' }),
+    fetchStrapi<any[]>("templates", { populate: '*' })
+  ]);
+
+  const solution = solutions?.[0];
 
   if (!solution) {
     return notFound();
   }
 
-  const solutionImage = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600";
+  const solutionImage = solution.cover_image?.url 
+    ? getStrapiMedia(solution.cover_image.url) 
+    : "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600";
+    
+  // Assuming short_description for header, description mapped to features etc.
+  const shortDesc = solution.short_description || solution.description || "";
 
   return (
     <main className="min-h-screen" suppressHydrationWarning>
       <SubPageHeader 
-        badge="Çözümlerimiz"
+        badge={solution.badge_text || "Çözümlerimiz"}
         title={solution.title}
-        description={solution.description}
+        description={shortDesc}
       >
           <div className="flex items-center gap-6 mt-4">
              <Link 
@@ -56,18 +62,19 @@ export default function SolutionDetailPage() {
                         Hizmet Hakkında
                     </h2>
                     <p className="text-base text-muted-foreground leading-relaxed font-medium">
-                        {solution.description} Macework olarak sunduğumuz bu çözümde, markanızın dijital dünyadaki varlığını en üst seviyeye taşımak için modern teknolojileri ve kullanıcı odaklı tasarım prensiplerini birleştiriyoruz. 
+                        {solution.description || shortDesc} 
+                        Macework olarak sunduğumuz bu çözümde, markanızın dijital dünyadaki varlığını en üst seviyeye taşımak için modern teknolojileri ve kullanıcı odaklı tasarım prensiplerini birleştiriyoruz. 
                         Ölçeklenebilir, güvenli ve performans odaklı yapılarla işinizi büyütmenize yardımcı oluyoruz.
                     </p>
                   </div>
 
                   <div className="grid sm:grid-cols-2 gap-4">
-                    {solution.features.map((feature: string) => (
-                      <div key={feature} className="flex items-center gap-3.5 p-4 rounded-xl bg-card border border-border/50 group hover:border-macework/20 transition-all">
+                    {solution.features?.map((feature: any, idx: number) => (
+                      <div key={feature.documentId || feature.id || idx} className="flex items-center gap-3.5 p-4 rounded-xl bg-card border border-border/50 group hover:border-macework/20 transition-all">
                         <div className="w-8 h-8 rounded-lg bg-macework/5 flex items-center justify-center text-macework shrink-0">
                            <CheckCircle2 className="w-3.5 h-3.5" />
                         </div>
-                        <span className="font-semibold text-xs tracking-tight">{feature}</span>
+                        <span className="font-semibold text-xs tracking-tight">{feature.title || feature}</span>
                       </div>
                     ))}
                   </div>
@@ -92,11 +99,11 @@ export default function SolutionDetailPage() {
                   </div>
 
                   <div className="space-y-6">
-                     {siteContent.process.items.map((step, i) => {
+                     {(solution.process_steps?.length > 0 ? solution.process_steps : (homePage?.process_steps || [])).map((step: any, i: number) => {
                         return (
-                           <div key={i} className="flex gap-4 group">
+                           <div key={step.documentId || step.id || i} className="flex gap-4 group">
                               <div className="w-9 h-9 rounded-full border border-border flex items-center justify-center shrink-0 transition-transform group-hover:scale-105 text-foreground bg-background text-[13px] font-bold">
-                                 {i + 1}
+                                 {step.step_number || (i + 1).toString().padStart(2, '0')}
                               </div>
                               <div className="space-y-0.5 pt-0.5">
                                  <h4 className="text-[13px] font-bold tracking-tight leading-tight text-foreground">{step.title}</h4>
@@ -145,15 +152,15 @@ export default function SolutionDetailPage() {
             </div>
 
             <div className="grid md:grid-cols-3 gap-8">
-              {siteContent.templates.items.slice(0, 3).map((template, idx) => (
+              {templates?.slice(0, 3).map((template, idx) => (
                 <Link 
-                    key={idx} 
-                    href={template.href}
+                    key={template.documentId || template.id || idx} 
+                    href={`/sablonlar/${template.slug}`}
                     className="group space-y-4"
                 >
                    <div className="relative aspect-[16/10] rounded-[2rem] overflow-hidden border border-border bg-muted">
                       <img 
-                        src={template.image} 
+                        src={getStrapiMedia(template.preview_image?.url)} 
                         alt={template.title} 
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" 
                       />

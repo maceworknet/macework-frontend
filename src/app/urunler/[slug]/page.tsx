@@ -1,33 +1,64 @@
-"use client"
-
-import { useParams } from "next/navigation";
-import { siteContent } from "@/content/site-content";
-import { ArrowRight, CheckCircle2, Globe, ExternalLink, Box, Laptop, Smartphone, Rocket } from "lucide-react";
-import { motion } from "framer-motion";
+import { ArrowRight, CheckCircle2, Box, Laptop, Rocket, ExternalLink } from "lucide-react";
 import { SubPageHeader } from "@/components/subpage-header";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { fetchStrapi, getStrapiMedia } from "@/lib/strapi";
+// import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
-export default function ProductDetailPage() {
-  const { slug } = useParams();
-  const product = siteContent.products.items.find((item: any) => item.slug === slug);
+
+
+const StrapiBlocks = ({ content }) => {
+  if (!content || !Array.isArray(content)) return null;
+  return content.map((block, i) => {
+    if (block.type === 'paragraph') {
+      return <p key={i} className="mb-4">{block.children?.map((c, j) => <span key={j}>{c.text}</span>)}</p>;
+    }
+    if (block.type === 'heading') {
+      const Level = `h${block.level || 1}`;
+      return <Level key={i} className="text-2xl font-bold mb-4">{block.children?.map((c, j) => <span key={j}>{c.text}</span>)}</Level>;
+    }
+    if (block.type === 'list') {
+      const ListTag = block.format === 'ordered' ? 'ol' : 'ul';
+      return (
+        <ListTag key={i} className="list-disc pl-6 mb-4">
+          {block.children?.map((item, j) => (
+            <li key={j}>{item.children?.map((c, k) => <span key={k}>{c.text}</span>)}</li>
+          ))}
+        </ListTag>
+      );
+    }
+    return null;
+  });
+};
+
+export default async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+
+  const products = await fetchStrapi<any[]>("products", {
+    populate: '*',
+    filters: { slug },
+  });
+
+  const product = products?.[0];
 
   if (!product) {
     return notFound();
   }
 
-  const productImage = "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600";
+  const productImage = product.cover_image?.url 
+    ? getStrapiMedia(product.cover_image.url)
+    : "https://images.unsplash.com/photo-1460925895917-afdab827c52f?q=80&w=1600";
 
   return (
     <main className="min-h-screen" suppressHydrationWarning>
       <SubPageHeader 
-        badge={`${product.badge} / Ürünümüz`}
+        badge={`${product.badge || "Ürünümüz"}`}
         title={product.title}
-        description={product.description}
+        description={product.short_description || product.description}
       >
           <div className="flex items-center gap-6 mt-4">
              <Link 
-              href="/#products"
+              href="/#ürünler"
               className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full bg-muted/60 border border-border text-[11px] font-bold hover:bg-muted transition-all"
             >
               <ArrowRight className="w-3.5 h-3.5 rotate-180" />
@@ -40,38 +71,42 @@ export default function ProductDetailPage() {
         <div className="container">
           <div className="grid lg:grid-cols-12 gap-16">
             
-            {/* Left Content Column */}
+            ${/* Left Content Column */}
             <div className="lg:col-span-8 space-y-16">
-               {/* Featured Image */}
                <div className="relative aspect-[16/9] rounded-[2.5rem] overflow-hidden border border-border/60 bg-muted/20">
                   <img src={productImage} alt={product.title} className="w-full h-full object-cover" />
                </div>
 
-               {/* Descriptions */}
                <div className="space-y-12">
                   <div className="space-y-6">
                     <h2 className="scroll-m-20 text-2xl font-bold tracking-tight flex items-center gap-3">
                         <span className="w-1.5 h-7 rounded-full bg-macework" />
                         Ürün Hakkında
                     </h2>
-                    <p className="text-base text-muted-foreground leading-relaxed font-medium">
-                        {product.longDescription} Macework laboratuvarlarında titizlikle geliştirilen bu çözüm, modern işletmelerin en karmaşık süreçlerini bile kullanıcı dostu bir arayüzle yönetebilmeleri için tasarlanmıştır.
-                    </p>
-                  </div>
-
-                  <div className="space-y-8">
-                    <h3 className="text-xl font-bold tracking-tight">Öne Çıkan Özellikler</h3>
-                    <div className="grid sm:grid-cols-2 gap-4">
-                        {product.features.map((feature: string) => (
-                        <div key={feature} className="flex items-center gap-4 p-5 rounded-2xl bg-card border border-border/50 group hover:border-macework/20 transition-all">
-                            <div className="w-9 h-9 rounded-lg bg-macework/5 flex items-center justify-center text-macework">
-                            <CheckCircle2 className="w-4 h-4" />
-                            </div>
-                            <span className="font-semibold text-xs tracking-tight">{feature}</span>
-                        </div>
-                        ))}
+                    <div className="text-base text-muted-foreground leading-relaxed font-medium space-y-6">
+                        {product.content_blocks ? (
+                            <StrapiBlocks content={product.content_blocks} />
+                        ) : (
+                            <p>{product.long_description || product.description}</p>
+                        )}
                     </div>
                   </div>
+
+                  {product.features && product.features.length > 0 && (
+                      <div className="space-y-8">
+                        <h3 className="text-xl font-bold tracking-tight">Öne Çikan Özellikler</h3>
+                        <div className="grid sm:grid-cols-2 gap-4">
+                            {product.features.map((feature: any, idx: number) => (
+                                <div key={idx} className="flex items-center gap-4 p-5 rounded-2xl bg-card border border-border/50 group hover:border-macework/20 transition-all">
+                                    <div className="w-9 h-9 rounded-lg bg-macework/5 flex items-center justify-center text-macework">
+                                    <CheckCircle2 className="w-4 h-4" />
+                                    </div>
+                                    <span className="font-semibold text-xs tracking-tight">{feature.title || feature}</span>
+                                </div>
+                            ))}
+                        </div>
+                      </div>
+                  )}
                </div>
             </div>
 
@@ -86,40 +121,42 @@ export default function ProductDetailPage() {
                   <div className="space-y-6">
                      <div className="flex justify-between items-center pb-4 border-b border-border/40 text-foreground">
                         <span className="text-muted-foreground text-[11px] font-bold uppercase tracking-widest flex items-center gap-2">
-                            <Rocket className="w-3.5 h-3.5" /> Yayın Tarihi
+                            <Rocket className="w-3.5 h-3.5" /> Sürüm
                         </span>
-                        <span className="font-bold text-sm tracking-tight text-foreground">2026 / Mart</span>
+                        <span className="font-bold text-sm tracking-tight text-foreground">{product.version || "1.0.0"}</span>
                      </div>
                      <div className="flex justify-between items-center pb-4 border-b border-border/40 text-foreground">
                         <span className="text-muted-foreground text-[11px] font-bold uppercase tracking-widest flex items-center gap-2">
-                            <Box className="w-3.5 h-3.5" /> Kategorisi
+                            <Box className="w-3.5 h-3.5" /> Kategori
                         </span>
-                        <span className="font-bold text-sm tracking-tight text-macework">{product.category}</span>
+                        <span className="font-bold text-sm tracking-tight text-macework">{product.category || product.tag || "Platform"}</span>
                      </div>
                      <div className="flex justify-between items-center pb-4 border-b border-border/40 text-foreground">
                         <span className="text-muted-foreground text-[11px] font-bold uppercase tracking-widest flex items-center gap-2">
-                            <Laptop className="w-3.5 h-3.5" /> Platform
+                            <Laptop className="w-3.5 h-3.5" /> Erişim
                         </span>
-                        <span className="font-bold text-sm tracking-tight text-foreground italic">Bulut (SaaS)</span>
+                        <span className="font-bold text-sm tracking-tight text-foreground italic">{product.platform_type || "Bulut (SaaS)"}</span>
                      </div>
                   </div>
                   
-                  <div className="pt-4">
-                    <a 
-                        href={product.href} 
-                        target="_blank" 
-                        rel="noopener noreferrer"
-                        className="flex items-center justify-center gap-2 w-full py-5 rounded-full bg-foreground text-background font-bold hover:scale-[1.02] active:scale-95 transition-all text-xs uppercase tracking-widest"
-                    >
-                        Ürüne Git
-                        <ExternalLink className="w-4 h-4" />
-                    </a>
-                  </div>
+                  {product.platform_url && (
+                      <div className="pt-4">
+                        <a 
+                            href={product.platform_url} 
+                            target="_blank" 
+                            rel="noopener noreferrer"
+                            className="flex items-center justify-center gap-2 w-full py-5 rounded-full bg-foreground text-background font-bold hover:scale-[1.02] active:scale-95 transition-all text-xs uppercase tracking-widest"
+                        >
+                            Platforma Git
+                            <ExternalLink className="w-4 h-4" />
+                        </a>
+                      </div>
+                  )}
 
                   <div className="p-6 rounded-3xl bg-muted/30 border border-border/50 text-center space-y-3">
                      <p className="text-[10px] font-bold text-muted-foreground tracking-widest uppercase">Destek Al</p>
-                     <p className="text-[11px] text-muted-foreground leading-snug">Bu ürünle ilgili bir sorun mu yaşıyorsunuz?</p>
-                     <Link href="/contact" className="inline-block text-[11px] font-bold text-macework underline underline-offset-4 decoration-macework/30 hover:decoration-macework transition-all">Müşteri Hizmetlerine Yazın</Link>
+                     <p className="text-[11px] text-muted-foreground leading-snug">Bu platformla ilgili bir sorun mu yaşıyorsunuz?</p>
+                     <Link href="/iletisim" className="inline-block text-[11px] font-bold text-macework underline underline-offset-4 decoration-macework/30 hover:decoration-macework transition-all">Müşteri Hizmetlerine Yazın</Link>
                   </div>
                </div>
             </div>

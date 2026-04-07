@@ -2,17 +2,16 @@
 
 import Link from "next/link";
 import { ArrowRight, MoveRight } from "lucide-react";
-import { siteContent } from "@/content/site-content";
 import { Card, CardContent, CardHeader, CardTitle, CardFooter } from "./ui/card";
 import { Badge } from "./ui/badge"; // I'll create this or just use a span for now
 
-export function WorkSection() {
+export function WorkSection({ works, heading }: { works: any[], heading?: string }) {
   return (
     <section id="islerimiz" className="py-24 bg-background">
       <div className="container">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-16">
           <div className="max-w-2xl space-y-4">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Seçkin İşlerimiz</h2>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">{heading || "Seçkin İşlerimiz"}</h2>
             <p className="text-lg text-muted-foreground font-normal">
               Dijitalde iz bırakan, problem çözen ve binlerce kullanıcıya ulaşan projelerimizden bazıları.
             </p>
@@ -27,9 +26,9 @@ export function WorkSection() {
         </div>
 
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {siteContent.works.items.map((work) => (
+          {works?.map((work, idx) => (
             <Link
-              key={work.id}
+              key={work.documentId || idx}
               href={`/islerimiz/${work.slug}`}
               className="group h-full"
             >
@@ -51,7 +50,7 @@ export function WorkSection() {
                     {work.description}
                   </p>
                   <div className="flex flex-wrap gap-2">
-                    {work.technologies.slice(0, 3).map(tech => (
+                    {work.tags?.slice(0, 3).map((tech: string) => (
                       <Badge key={tech} variant="outline" className="text-[10px] font-semibold border-border/50 text-muted-foreground/80 pointer-events-none">
                         {tech}
                       </Badge>

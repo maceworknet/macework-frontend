@@ -1,6 +1,6 @@
 "use client";
 
-import { siteContent } from "../content/site-content";
+
 import Link from "next/link";
 import { ArrowRight, MoveRight, ChevronRight } from "lucide-react";
 import { InfiniteGrid } from "./ui/the-infinite-grid";
@@ -23,7 +23,7 @@ const item = {
   show: { opacity: 1, y: 0, transition: { type: "spring", stiffness: 100 } },
 } as const;
 
-export function Hero() {
+export function Hero({ data }: { data: any }) {
   return (
     <InfiniteGrid className="pt-52 pb-16 lg:pt-64 lg:pb-24 w-full flex flex-col justify-center">
       <div className="container relative z-10">
@@ -40,7 +40,7 @@ export function Hero() {
               className="inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-4 py-1.5 text-[13px] font-medium text-muted-foreground hover:bg-muted/80 hover:text-foreground transition-all backdrop-blur-sm group"
             >
               <div className="w-1.5 h-1.5 rounded-full bg-macework animate-pulse" />
-              {siteContent.hero.badge}
+              {data.hero_badge || "Yaratıcı Teknoloji Stüdyosu"}
               <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
             </Link>
           </motion.div>
@@ -50,7 +50,7 @@ export function Hero() {
             variants={item}
             className="text-4xl md:text-5xl lg:text-6xl font-extrabold tracking-tight text-foreground mb-8 whitespace-pre-line leading-[1.2] text-gradient pb-2"
           >
-            {siteContent.hero.title.replace(/\n/g, ' ')}
+            {(data.hero_heading || "").replace(/\n/g, ' ')}
           </motion.h1>
           
           {/* Description */}
@@ -58,7 +58,7 @@ export function Hero() {
             variants={item}
             className="text-base md:text-lg text-muted-foreground mb-12 leading-relaxed max-w-3xl font-medium"
           >
-            {siteContent.hero.description}
+            {data.hero_subheading}
           </motion.p>
           
           {/* CTAs */}
@@ -67,15 +67,15 @@ export function Hero() {
             className="flex flex-col sm:flex-row items-center gap-4"
           >
             <Button asChild size="lg" className="h-12 px-8 rounded-full bg-macework hover:bg-macework-hover text-white shadow-[0_10px_30px_-10px_rgba(225,29,72,0.4)] transition-all hover:scale-[1.02] active:scale-[0.98]">
-              <Link href={siteContent.hero.primaryCta.href}>
-                {siteContent.hero.primaryCta.label}
+              <Link href={data.hero_cta_primary_url || "#"}>
+                {data.hero_cta_primary_label || "İncele"}
                 <MoveRight className="ml-2 w-5 h-5 group-hover:translate-x-0.5 transition-transform" />
               </Link>
             </Button>
             
             <Button asChild variant="outline" size="lg" className="h-12 px-8 rounded-full border-border/50 backdrop-blur-sm bg-background/50 hover:bg-muted/50 transition-all hover:scale-[1.02] active:scale-[0.98]">
-              <Link href={siteContent.hero.secondaryCta.href}>
-                {siteContent.hero.secondaryCta.label}
+              <Link href={data.hero_cta_secondary_url || "#"}>
+                {data.hero_cta_secondary_label || "Ürünler"}
                 <ArrowRight className="ml-2 w-4 h-4 text-muted-foreground" />
               </Link>
             </Button>
