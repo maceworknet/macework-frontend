@@ -1,4 +1,5 @@
-export const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337';
+const STRAPI_ENV = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337';
+export const STRAPI_URL = STRAPI_ENV.endsWith('/') ? STRAPI_ENV.slice(0, -1) : STRAPI_ENV;
 
 export async function fetchStrapi<T = any>(
   path: string,
