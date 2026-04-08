@@ -9,7 +9,7 @@ export function Footer({ settings }: { settings?: any }) {
   const email = settings?.footer_email || siteContent.contact.email;
   const phone = settings?.footer_phone || siteContent.contact.phone;
 
-  const socialLinks = [];
+  const socialLinks: any[] = [];
   if (settings) {
     if (settings.social_instagram) socialLinks.push({ href: settings.social_instagram, icon: 'instagram', label: 'Instagram' });
     if (settings.social_twitter) socialLinks.push({ href: settings.social_twitter, icon: 'twitter', label: 'Twitter' });
