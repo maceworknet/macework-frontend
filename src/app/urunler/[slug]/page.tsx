@@ -7,24 +7,24 @@ import { fetchStrapi, getStrapiMedia } from "@/lib/strapi";
 
 
 
+import React from "react";
+
 const StrapiBlocks = ({ content }: { content: any[] | null }) => {
   if (!content || !Array.isArray(content)) return null;
-  return content.map((block, i) => {
+  return content.map((block: any, i: number) => {
     if (block.type === 'paragraph') {
-      return <p key={i} className="mb-4">{block.children?.map((c, j) => <span key={j}>{c.text}</span>)}</p>;
+      return <p key={i} className="mb-4">{block.children?.map((c: any, j: number) => <span key={j}>{c.text}</span>)}</p>;
     }
     if (block.type === 'heading') {
-      const Level = `h${block.level || 1}`;
-      return <Level key={i} className="text-2xl font-bold mb-4">{block.children?.map((c, j) => <span key={j}>{c.text}</span>)}</Level>;
+      const tag = `h${block.level || 1}` as keyof React.JSX.IntrinsicElements;
+      return React.createElement(tag, { key: i, className: "text-2xl font-bold mb-4" }, block.children?.map((c: any, j: number) => <span key={j}>{c.text}</span>));
     }
     if (block.type === 'list') {
-      const ListTag = block.format === 'ordered' ? 'ol' : 'ul';
-      return (
-        <ListTag key={i} className="list-disc pl-6 mb-4">
-          {block.children?.map((item, j) => (
-            <li key={j}>{item.children?.map((c, k) => <span key={k}>{c.text}</span>)}</li>
-          ))}
-        </ListTag>
+      const tag = (block.format === 'ordered' ? 'ol' : 'ul') as keyof React.JSX.IntrinsicElements;
+      return React.createElement(tag, { key: i, className: "list-disc pl-6 mb-4" },
+        block.children?.map((item: any, j: number) => (
+          <li key={j}>{item.children?.map((c: any, k: number) => <span key={k}>{c.text}</span>)}</li>
+        ))
       );
     }
     return null;
