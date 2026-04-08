@@ -18,7 +18,7 @@ import {
 } from "@/components/ui/select";
 
 export default function ContactClient({ strapiSettings }: { strapiSettings?: any }) {
-  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
