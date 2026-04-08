@@ -15,17 +15,46 @@ import {
   SelectTrigger,
   SelectValue,
 } from "./ui/select";
+import { STRAPI_URL } from "@/lib/strapi";
 
-export function LeadForm() {
-  const [status, setStatus] = useState<"idle" | "submitting" | "success">("idle");
+export function LeadForm({ contactSettings }: { contactSettings?: any }) {
+  const [status, setStatus] = useState<"idle" | "submitting" | "success" | "error">("idle");
+  const [formData, setFormData] = useState({
+    name: "",
+    company: "",
+    email: "",
+    interest: "SaaS Ürünleri",
+    message: ""
+  });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({ ...prev, [e.target.name]: e.target.value }));
+  };
+
+  const handleSelectChange = (value: string) => {
+    setFormData(prev => ({ ...prev, interest: value }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setStatus("submitting");
-    // Mock submit
-    setTimeout(() => {
+    
+    try {
+      const res = await fetch(`${STRAPI_URL}/api/leads`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ data: formData }),
+      });
+      
+      if (!res.ok) throw new Error("Gönderim başarısız");
       setStatus("success");
-    }, 1500);
+    } catch (err) {
+      console.error(err);
+      setStatus("error");
+      setTimeout(() => setStatus("idle"), 3000);
+    }
   };
 
   if (status === "success") {
@@ -49,15 +78,16 @@ export function LeadForm() {
     );
   }
 
+  const heading = contactSettings?.form_heading || "Yeni Bir Projeye Başlayalım";
+  const subheading = contactSettings?.form_subheading || "Fikrinizi ürüne dönüştürmek veya markanızı dijitalde büyütmek için ilk adımı atın.";
+  
   return (
     <section id="lead" className="py-24">
       <div className="container">
         <div className="w-full">
           <div className="text-center mb-16 space-y-2">
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">Yeni Bir Projeye Başlayalım</h2>
-            <p className="text-lg text-muted-foreground">
-              Fikrinizi ürüne dönüştürmek veya markanızı dijitalde büyütmek için ilk adımı atın.
-            </p>
+            <h2 className="text-3xl md:text-4xl font-bold tracking-tight">{heading}</h2>
+            <p className="text-lg text-muted-foreground">{subheading}</p>
           </div>
 
           <Card className="overflow-hidden relative border-border/60 shadow-none bg-card/30 backdrop-blur-sm rounded-[2.5rem]">
@@ -70,9 +100,9 @@ export function LeadForm() {
                 <div className="space-y-2">
                   <Label htmlFor="name">Ad Soyad</Label>
                   <Input 
-                    id="name"
-                    required
-                    placeholder="Yaser Köse"
+                    id="name" name="name" required
+                    value={formData.name} onChange={handleChange}
+                    placeholder={contactSettings?.form_placeholder_name || "Yaser Köse"}
                     className="rounded-md"
                   />
                 </div>
@@ -80,8 +110,9 @@ export function LeadForm() {
                 <div className="space-y-2">
                   <Label htmlFor="company">Firma Adı</Label>
                   <Input 
-                    id="company"
-                    placeholder="Macework"
+                    id="company" name="company"
+                    value={formData.company} onChange={handleChange}
+                    placeholder={contactSettings?.form_placeholder_company || "Macework"}
                     className="rounded-md"
                   />
                 </div>
@@ -89,17 +120,16 @@ export function LeadForm() {
                 <div className="space-y-2">
                   <Label htmlFor="email">E-posta</Label>
                   <Input 
-                    id="email"
-                    required
-                    type="email" 
-                    placeholder="iletisim@macework.com"
+                    id="email" name="email" required type="email" 
+                    value={formData.email} onChange={handleChange}
+                    placeholder={contactSettings?.form_placeholder_email || "iletisim@macework.com"}
                     className="rounded-md"
                   />
                 </div>
 
                 <div className="space-y-2">
                   <Label htmlFor="interest">İlgilendiğiniz Alan</Label>
-                  <Select name="interest" defaultValue="SaaS Ürünleri">
+                  <Select name="interest" value={formData.interest} onValueChange={handleSelectChange}>
                     <SelectTrigger id="interest" className="rounded-md">
                       <SelectValue placeholder="Bir alan seçin" />
                     </SelectTrigger>
@@ -116,10 +146,9 @@ export function LeadForm() {
                 <div className="md:col-span-2 space-y-2">
                   <Label htmlFor="message">Mesajınız</Label>
                   <Textarea 
-                    id="message"
-                    required
-                    rows={4}
-                    placeholder="Projenizden kısaca bahsedin..."
+                    id="message" name="message" required rows={4}
+                    value={formData.message} onChange={handleChange}
+                    placeholder={contactSettings?.form_placeholder_message || "Projenizden kısaca bahsedin..."}
                     className="rounded-md resize-none"
                   />
                 </div>
@@ -131,9 +160,9 @@ export function LeadForm() {
                   >
                     {status === "submitting" ? (
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                    ) : (
+                    ) : status === "error" ? "Hata! Tekrar deneyin." : (
                       <>
-                        Teklif Al
+                        {contactSettings?.form_button_text || "Teklif Al"}
                         <Send className="ml-2 w-4 h-4" />
                       </>
                     )}

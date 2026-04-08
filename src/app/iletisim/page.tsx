@@ -1,4 +1,4 @@
-﻿import { fetchStrapi, getStrapiMedia } from '@/lib/strapi';
+import { fetchStrapi, getStrapiMedia } from '@/lib/strapi';
 import ContactClient from './contact-client';
 
 export const metadata = {
@@ -7,6 +7,10 @@ export const metadata = {
 };
 
 export default async function ContactPage() {
-  const settings = await fetchStrapi('global-setting', { populate: '*' }).catch(() => null);
-  return <ContactClient strapiSettings={settings} />;
+  const [contactPage, homePage] = await Promise.all([
+    fetchStrapi("contact-page", { populate: '*' }).catch(() => null),
+    fetchStrapi("home-page", { populate: 'trusted_brands_logos' }).catch(() => null)
+  ]);
+  
+  return <ContactClient strapiSettings={{ ...contactPage, ...homePage }} />;
 }

@@ -1,23 +1,23 @@
+import qs from 'qs';
+
 const STRAPI_ENV = process.env.NEXT_PUBLIC_STRAPI_URL || 'http://127.0.0.1:1337';
 export const STRAPI_URL = STRAPI_ENV.endsWith('/') ? STRAPI_ENV.slice(0, -1) : STRAPI_ENV;
 
 export async function fetchStrapi<T = any>(
   path: string,
-  options: { populate?: string, filters?: Record<string, string> } = {}
+  options: { populate?: any, filters?: Record<string, any> } = {}
 ): Promise<T> {
-  const params = new URLSearchParams();
+  const queryObj: any = {};
   
   if (options.populate) {
-    params.append('populate', options.populate);
+    queryObj.populate = options.populate;
   }
   
   if (options.filters) {
-    Object.entries(options.filters).forEach(([key, value]) => {
-      params.append('filters[' + key + '][$eq]', String(value));
-    });
+    queryObj.filters = options.filters;
   }
 
-  const urlQuery = params.toString() ? '?' + params.toString() : '';
+  const urlQuery = Object.keys(queryObj).length > 0 ? '?' + qs.stringify(queryObj, { encodeValuesOnly: true }) : '';
   const url = STRAPI_URL + '/api/' + path + urlQuery;
   
   try {

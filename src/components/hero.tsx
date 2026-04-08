@@ -4,6 +4,7 @@
 import Link from "next/link";
 import { ArrowRight, MoveRight, ChevronRight } from "lucide-react";
 import { InfiniteGrid } from "./ui/the-infinite-grid";
+import { getStrapiMedia } from "@/lib/strapi";
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 
@@ -93,11 +94,22 @@ export function Hero({ data }: { data: any }) {
                 <div className="flex w-fit gap-16 items-center animate-marquee whitespace-nowrap">
                    {[...Array(4)].map((_, i) => (
                       <div key={i} className="flex gap-16 items-center">
-                         {["Qrgetir", "Carigetir", "SociaMind", "byoo.pro"].map((p, j) => (
-                            <span key={`${i}-${j}`} className="text-xl md:text-2xl font-bold tracking-tight text-foreground/40 hover:text-foreground transition-colors cursor-default select-none">
-                               {p}
-                            </span>
-                         ))}
+                         {data.trusted_brands_logos?.length > 0 ? (
+                            data.trusted_brands_logos.map((logo: any, j: number) => (
+                               <img 
+                                 key={`${i}-${j}`}
+                                 src={getStrapiMedia(logo.url)} 
+                                 alt={logo.alternativeText || `Brand ${j}`} 
+                                 className="h-8 max-w-[140px] object-contain opacity-40 hover:opacity-100 transition-opacity grayscale hover:grayscale-0"
+                               />
+                            ))
+                         ) : (
+                            ["Qrgetir", "Carigetir", "SociaMind", "byoo.pro"].map((p, j) => (
+                                <span key={`${i}-${j}`} className="text-xl md:text-2xl font-bold tracking-tight text-foreground/40 hover:text-foreground transition-colors cursor-default select-none">
+                                   {p}
+                                </span>
+                            ))
+                         )}
                       </div>
                    ))}
                 </div>
