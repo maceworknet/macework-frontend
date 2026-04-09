@@ -6,13 +6,15 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-const categories = ["Tümü", "Kurumsal", "Start-up", "E-Ticaret", "Pazarlama"];
 
-export function WorkList({ works }: { works: any[] }) {
+
+export function WorkList({ works, categories = [] }: { works: any[], categories?: any[] }) {
   const [activeCategory, setActiveCategory] = useState("Tümü");
 
+  const categoryNames = ["Tümü", ...categories.map(c => c.name)];
+
   const filteredWorks = works?.filter((work: any) => 
-    activeCategory === "Tümü" ? true : work.category === activeCategory
+    activeCategory === "Tümü" ? true : work.category?.name === activeCategory
   ) || [];
 
   return (
@@ -21,7 +23,7 @@ export function WorkList({ works }: { works: any[] }) {
       <div className="flex justify-center mb-16 px-4 overflow-hidden">
         <div className="inline-flex items-center p-1.5 bg-muted/50 backdrop-blur-sm rounded-2xl border border-border/50 max-w-full overflow-x-auto scrollbar-none">
           <div className="flex items-center min-w-max">
-            {categories.map((category) => (
+            {categoryNames.map((category) => (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}

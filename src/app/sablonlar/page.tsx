@@ -1,4 +1,4 @@
-﻿import { fetchStrapi, getStrapiMedia } from '@/lib/strapi';
+import { fetchStrapi, getStrapiMedia } from '@/lib/strapi';
 import TemplatesClient from './templates-client';
 
 export const metadata = {
@@ -7,6 +7,11 @@ export const metadata = {
 };
 
 export default async function TemplatesPage() {
-  const templates = await fetchStrapi('templates', { populate: '*' }).catch(() => []);
-  return <TemplatesClient strapiTemplates={templates} />;
+  const [templates, categories, globalSettings] = await Promise.all([
+    fetchStrapi<any[]>("templates", { populate: '*' }).catch(() => []),
+    fetchStrapi<any[]>("template-categories", { populate: '*' }).catch(() => []),
+    fetchStrapi<any>("global-setting", { populate: '*' }).catch(() => null)
+  ]);
+  
+  return <TemplatesClient strapiTemplates={templates} categories={categories} globalSettings={globalSettings} />;
 }

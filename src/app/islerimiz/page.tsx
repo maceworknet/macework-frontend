@@ -10,19 +10,23 @@ export const metadata = {
 };
 
 export default async function WorksPage() {
-  const projects = await fetchStrapi<any[]>("projects", { populate: '*' });
+  const [projects, categories, globalSettings] = await Promise.all([
+    fetchStrapi<any[]>("projects", { populate: '*' }),
+    fetchStrapi<any[]>("project-categories", { populate: '*' }).catch(() => []),
+    fetchStrapi<any>("global-setting", { populate: '*' }).catch(() => null)
+  ]);
 
   return (
     <main className="min-h-screen">
       <SubPageHeader 
         badge="İşlerimiz"
-        title="Neler Yaptık?"
-        description={`Dijitalde iz bırakan, problem çözen ve binlerce kullanıcıya ulaşan projelerimizden bazıları.`}
+        title={globalSettings?.projects_page_title || "Neler Yaptık?"}
+        description={globalSettings?.projects_page_desc || "Dijitalde iz bırakan, problem çözen ve binlerce kullanıcıya ulaşan projelerimizden bazıları."}
       />
 
       <section className="py-20 bg-background">
         <div className="container">
-          <WorkList works={projects} />
+          <WorkList works={projects} categories={categories} />
 
           {/* CTA Section - Normalized with About Page CTA */}
           <div className="mt-32 p-12 md:p-20 rounded-[3rem] bg-card border border-border/60 relative overflow-hidden text-center">

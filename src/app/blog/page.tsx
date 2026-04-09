@@ -8,19 +8,23 @@ export const metadata = {
 };
 
 export default async function BlogPage() {
-  const posts = await fetchStrapi<any[]>("blog-posts", { populate: '*' });
+  const [posts, categories, globalSettings] = await Promise.all([
+    fetchStrapi<any[]>("blog-posts", { populate: '*' }),
+    fetchStrapi<any[]>("blog-categories", { populate: '*' }).catch(() => []),
+    fetchStrapi<any>("global-setting", { populate: '*' }).catch(() => null)
+  ]);
 
   return (
     <main className="min-h-screen">
       <SubPageHeader 
         badge="Blog & Haberler"
-        title="Dünyadan Haberler"
-        description="Teknoloji, tasarım ve dijital ürün dünyasından güncel içerikler, vaka analizleri ve ajans günlüğümüz."
+        title={globalSettings?.blog_page_title || "Dünyadan Haberler"}
+        description={globalSettings?.blog_page_desc || "Teknoloji, tasarım ve dijital ürün dünyasından güncel içerikler, vaka analizleri ve ajans günlüğümüz."}
       />
 
       <section className="py-20 bg-background">
         <div className="container">
-          <BlogList posts={posts} />
+          <BlogList posts={posts} categories={categories} />
 
         </div>
       </section>

@@ -10,19 +10,29 @@ import { SubPageHeader } from "@/components/subpage-header";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-export default function TemplatesClient({ strapiTemplates }: { strapiTemplates?: any[] }) {
+export default function TemplatesClient({ 
+  strapiTemplates = [], 
+  categories = [],
+  globalSettings = {}
+}: { 
+  strapiTemplates?: any[], 
+  categories?: any[],
+  globalSettings?: any
+}) {
   const [activeCategory, setActiveCategory] = useState("Hepsi");
 
-  const filteredTemplates = (strapiTemplates || []).filter(item => 
-    activeCategory === "Hepsi" ? true : item.category === activeCategory
+  const categoryNames = ["Hepsi", ...categories.map(c => c.name)];
+
+  const filteredTemplates = strapiTemplates.filter(item => 
+    activeCategory === "Hepsi" ? true : item.category?.name === activeCategory
   );
 
   return (
     <main className="min-h-screen">
       <SubPageHeader 
         badge="Şablon Kütüphanesi"
-        title="Hazır Şablonlarımızı Keşfedin"
-        description="İşletmeniz için özelleştirilebilir, modern ve yüksek performanslı hazır web altyapıları. Sektörünüze en uygun çözümü seçin ve dijital dönüşümünüzü hızlandırın."
+        title={globalSettings?.templates_page_title || "Hazır Şablonlarımızı Keşfedin"}
+        description={globalSettings?.templates_page_desc || "İşletmeniz için özelleştirilebilir, modern ve yüksek performanslı hazır web altyapıları. Sektörünüze en uygun çözümü seçin ve dijital dönüşümünüzü hızlandırın."}
       />
 
       <section className="py-20 bg-background">
@@ -31,7 +41,7 @@ export default function TemplatesClient({ strapiTemplates }: { strapiTemplates?:
           <div className="flex justify-center mb-16 px-4">
             <div className="inline-flex items-center p-1.5 bg-muted/50 backdrop-blur-sm rounded-2xl border border-border/50 max-w-full overflow-x-auto scrollbar-none">
               <div className="flex items-center min-w-max">
-                {siteContent.templates.categories.map((category) => (
+                {categoryNames.map((category) => (
                   <button
                     key={category}
                     onClick={() => setActiveCategory(category)}
@@ -82,7 +92,7 @@ export default function TemplatesClient({ strapiTemplates }: { strapiTemplates?:
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                        />
                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-8">
-                          <span className="text-macework font-bold text-[10px] uppercase tracking-[0.2em]">{template.category}</span>
+                          <span className="text-macework font-bold text-[10px] uppercase tracking-[0.2em]">{template.category?.name || "Şablon"}</span>
                           <h4 className="text-white font-bold text-xl tracking-tight mt-1">{template.title}</h4>
                        </div>
                     </div>
@@ -90,7 +100,7 @@ export default function TemplatesClient({ strapiTemplates }: { strapiTemplates?:
                     <div className="p-8 flex-1 flex flex-col">
                         <div className="flex items-center gap-2 mb-4">
                             <span className="w-1.5 h-1.5 rounded-full bg-macework animate-pulse" />
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{template.category}</span>
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{template.category?.name || "Şablon"}</span>
                         </div>
                       
                         <h3 className="text-xl font-bold tracking-tight text-foreground mb-3 group-hover:text-macework transition-colors">
@@ -98,7 +108,7 @@ export default function TemplatesClient({ strapiTemplates }: { strapiTemplates?:
                         </h3>
                       
                         <p className="text-muted-foreground text-sm leading-relaxed mb-8 flex-1">
-                            Modern tasarımı ve güçlü altyapısıyla markanızı bir adım öne çıkaracak profesyonel {template.category.toLowerCase()} çözümü.
+                            Modern tasarımı ve güçlü altyapısıyla markanızı bir adım öne çıkaracak profesyonel {template.category?.name ? template.category.name.toLowerCase() : "şablon"} çözümü.
                         </p>
     
                         <div className="flex items-center justify-between pt-6 border-t border-border/40 group/link">

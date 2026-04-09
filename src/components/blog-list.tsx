@@ -6,13 +6,13 @@ import { ArrowRight } from "lucide-react";
 import Link from "next/link";
 import { cn } from "@/lib/utils";
 
-const categories = ["Tümü", "Teknoloji", "Tasarım", "Yazılım", "Pazarlama"];
-
-export function BlogList({ posts }: { posts: any[] }) {
+export function BlogList({ posts, categories = [] }: { posts: any[], categories?: any[] }) {
   const [activeCategory, setActiveCategory] = useState("Tümü");
 
+  const categoryNames = ["Tümü", ...categories.map(c => c.name)];
+
   const filteredPosts = posts?.filter((post: any) => 
-    activeCategory === "Tümü" ? true : post.category === activeCategory
+    activeCategory === "Tümü" ? true : post.category?.name === activeCategory
   ) || [];
 
   return (
@@ -21,7 +21,7 @@ export function BlogList({ posts }: { posts: any[] }) {
       <div className="flex justify-center mb-16 px-4 overflow-hidden">
         <div className="inline-flex items-center p-1.5 bg-muted/50 backdrop-blur-sm rounded-2xl border border-border/50 max-w-full overflow-x-auto scrollbar-none">
           <div className="flex items-center min-w-max">
-            {categories.map((category) => (
+            {categoryNames.map((category) => (
               <button
                 key={category}
                 onClick={() => setActiveCategory(category)}
