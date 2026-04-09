@@ -14,7 +14,7 @@ export function WorkList({ works, categories = [] }: { works: any[], categories?
   const categoryNames = ["Tümü", ...categories.map(c => c.name)];
 
   const filteredWorks = works?.filter((work: any) => 
-    activeCategory === "Tümü" ? true : work.category?.name === activeCategory
+    activeCategory === "Tümü" ? true : work.project_category?.name === activeCategory
   ) || [];
 
   return (
@@ -69,7 +69,7 @@ export function WorkList({ works, categories = [] }: { works: any[], categories?
                 <div className="mb-auto">
                     <div className="flex items-center justify-between mb-4">
                         <span className="text-[10px] font-bold uppercase tracking-widest text-macework bg-macework/10 px-3 py-1 rounded-full">{work.year}</span>
-                        <span className="text-[10px] font-medium text-muted-foreground">{work.category || 'Genel'}</span>
+                        <span className="text-[10px] font-medium text-muted-foreground">{work.project_category?.name || 'Genel'}</span>
                     </div>
                   
                     <h3 className="text-2xl font-semibold tracking-tight text-foreground mb-3 group-hover:text-macework transition-colors">

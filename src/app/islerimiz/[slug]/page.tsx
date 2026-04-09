@@ -32,7 +32,7 @@ export default async function WorkDetailPage({ params }: { params: Promise<{ slu
       >
           <div className="flex flex-wrap items-center justify-center gap-x-8 gap-y-4 text-muted-foreground font-bold">
              <div className="flex items-center gap-2 text-[11px] uppercase tracking-wider"><Calendar className="w-4 h-4 text-macework" /> {work.year}</div>
-             <div className="flex items-center gap-2 text-[11px] uppercase tracking-wider"><Tag className="w-4 h-4 text-macework" /> {work.category?.name || "Proje"}</div>
+             <div className="flex items-center gap-2 text-[11px] uppercase tracking-wider"><Tag className="w-4 h-4 text-macework" /> {work.project_category?.name || "Proje"}</div>
              {work.live_url && <div className="flex items-center gap-2 text-[11px] uppercase tracking-wider"><Globe className="w-4 h-4 text-macework" /> Yayında</div>}
           </div>
       </SubPageHeader>

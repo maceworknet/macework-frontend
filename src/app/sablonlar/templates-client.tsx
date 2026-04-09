@@ -24,7 +24,7 @@ export default function TemplatesClient({
   const categoryNames = ["Hepsi", ...categories.map(c => c.name)];
 
   const filteredTemplates = strapiTemplates.filter(item => 
-    activeCategory === "Hepsi" ? true : item.category?.name === activeCategory
+    activeCategory === "Hepsi" ? true : item.template_category?.name === activeCategory
   );
 
   return (
@@ -92,7 +92,7 @@ export default function TemplatesClient({
                         className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" 
                        />
                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col justify-end p-8">
-                          <span className="text-macework font-bold text-[10px] uppercase tracking-[0.2em]">{template.category?.name || "Şablon"}</span>
+                          <span className="text-macework font-bold text-[10px] uppercase tracking-[0.2em]">{template.template_category?.name || "Şablon"}</span>
                           <h4 className="text-white font-bold text-xl tracking-tight mt-1">{template.title}</h4>
                        </div>
                     </div>
@@ -100,7 +100,7 @@ export default function TemplatesClient({
                     <div className="p-8 flex-1 flex flex-col">
                         <div className="flex items-center gap-2 mb-4">
                             <span className="w-1.5 h-1.5 rounded-full bg-macework animate-pulse" />
-                            <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{template.category?.name || "Şablon"}</span>
+                            <span className="text-[10px] font-bold uppercase tracking-widest text-muted-foreground">{template.template_category?.name || "Şablon"}</span>
                         </div>
                       
                         <h3 className="text-xl font-bold tracking-tight text-foreground mb-3 group-hover:text-macework transition-colors">
@@ -108,7 +108,7 @@ export default function TemplatesClient({
                         </h3>
                       
                         <p className="text-muted-foreground text-sm leading-relaxed mb-8 flex-1">
-                            Modern tasarımı ve güçlü altyapısıyla markanızı bir adım öne çıkaracak profesyonel {template.category?.name ? template.category.name.toLowerCase() : "şablon"} çözümü.
+                            Modern tasarımı ve güçlü altyapısıyla markanızı bir adım öne çıkaracak profesyonel {template.template_category?.name ? template.template_category.name.toLowerCase() : "şablon"} çözümü.
                         </p>
     
                         <div className="flex items-center justify-between pt-6 border-t border-border/40 group/link">
