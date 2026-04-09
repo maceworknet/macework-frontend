@@ -52,4 +52,4 @@ npm run start
 
 ## İletişim
 
-Macework Creative - [macework.com](https://macework.net)
+Macework Creative - [macework.net](https://macework.net)
