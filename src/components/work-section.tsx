@@ -38,7 +38,7 @@ export function WorkSection({ works, heading }: { works: any[], heading?: string
                       <Badge variant="secondary" className="text-[10px] uppercase bg-macework/10 text-macework border-none shadow-none px-3 py-1">
                         {work.year}
                       </Badge>
-                      <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">{work.category}</span>
+                      <span className="text-[10px] font-medium text-muted-foreground uppercase tracking-wider">{work.project_category?.name || 'Genel'}</span>
                   </div>
                   <CardTitle className="text-2xl font-bold tracking-tight group-hover:text-macework transition-colors leading-tight">
                     {work.title}
