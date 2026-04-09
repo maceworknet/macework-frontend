@@ -72,7 +72,7 @@ export default function TemplateDetailPage({ params }: { params: Promise<{ slug:
                   <div className="space-y-6">
                      <div className="flex justify-between items-center pb-4 border-b border-border/40 font-medium">
                         <span className="text-muted-foreground text-[11px] font-bold uppercase tracking-widest flex items-center gap-2 font-sans"><Tag className="w-3.5 h-3.5" /> Kategori</span>
-                        <span className="text-sm font-bold font-sans">{template.category || "Web App"}</span>
+                        <span className="text-sm font-bold font-sans">{template.category?.name || "Web App"}</span>
                      </div>
                   </div>
                   {template.demo_url && (

@@ -4,7 +4,7 @@ import { SubPageHeader } from "@/components/subpage-header";
 import { motion } from "framer-motion";
 import { Users, Target, Rocket, Heart } from "lucide-react";
 import Link from "next/link";
-import React from "react";
+import { BlocksRenderer } from "@strapi/blocks-react-renderer";
 
 export default function AboutClient({ strapiData, strapiTeam }: { strapiData?: any, strapiTeam?: any[] }) {
   // Turbopack AST Bug Fix: Pulling complex inline ternaries out of JSX brackets 
@@ -32,16 +32,19 @@ export default function AboutClient({ strapiData, strapiTeam }: { strapiData?: a
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="space-y-8">
               <div className="space-y-4">
-                <h2 className="text-3xl font-bold tracking-tight md:text-4xl">{strapiData?.title || "Sınırları Zorlayan Dijital Çözümler"}</h2>
+                <h2 className="text-3xl font-bold tracking-tight md:text-4xl">{strapiData?.heading || "Sınırları Zorlayan Dijital Çözümler"}</h2>
                 <div className="h-1.5 w-12 bg-macework rounded-full" />
-                <p className="text-xl font-medium text-foreground leading-relaxed">
-                  {strapiData?.subtitle || "Hikayemiz ve yolculuğumuz başlıyor"}
-                </p>
               </div>
               
-              <div className="space-y-6 text-muted-foreground leading-relaxed">
-                <p>{strapiData?.description || "Ekibimiz, her projeyi bir ürün gibi ele alan vizyoner tasarımcılar ve yetkin geliştiricilerden oluşur."}</p>
-                <p>Amacımız sadece bir web sitesi veya uygulama yapmak değil; markanızın dijital dünyadaki kalıcı izini oluşturmaktır.</p>
+              <div className="prose prose-lg dark:prose-invert text-muted-foreground leading-relaxed max-w-none">
+                {strapiData?.story ? (
+                  <BlocksRenderer content={strapiData.story} />
+                ) : (
+                  <>
+                    <p>Ekibimiz, her projeyi bir ürün gibi ele alan vizyoner tasarımcılar ve yetkin geliştiricilerden oluşur.</p>
+                    <p>Amacımız sadece bir web sitesi veya uygulama yapmak değil; markanızın dijital dünyadaki kalıcı izini oluşturmaktır.</p>
+                  </>
+                )}
               </div>
 
               <div className="grid grid-cols-2 gap-8 pt-8 border-t border-border/50">

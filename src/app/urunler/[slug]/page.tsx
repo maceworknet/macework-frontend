@@ -71,7 +71,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         <div className="container">
           <div className="grid lg:grid-cols-12 gap-16">
             
-            ${/* Left Content Column */}
+            {/* Left Content Column */}
             <div className="lg:col-span-8 space-y-16">
                <div className="relative aspect-[16/9] rounded-[2.5rem] overflow-hidden border border-border/60 bg-muted/20">
                   <img src={productImage} alt={product.title} className="w-full h-full object-cover" />
