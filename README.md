@@ -1,4 +1,4 @@
-# Macework Creativ Landing Page
+# Macework Creative Landing Page
 
 Macework Creativ için modern, premium ve SaaS odaklı yeni nesil landing page.
 
@@ -52,4 +52,4 @@ npm run start
 
 ## İletişim
 
-Macework Creativ - [macework.com](https://macework.com)
+Macework Creative - [macework.com](https://macework.net)
