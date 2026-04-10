@@ -66,7 +66,9 @@ export function BlogList({ posts, categories = [] }: { posts: any[], categories?
               >
                 <div className="mb-auto">
                     <div className="flex items-center gap-4 mb-6">
-                        <span className="text-[10px] font-bold uppercase tracking-widest text-macework bg-macework/10 px-3 py-1 rounded-full">{post.blog_category?.name || "Haber"}</span>
+                        <span className="text-[10px] font-bold uppercase tracking-widest text-macework bg-macework/10 px-3 py-1 rounded-full">
+                          {post.blog_category?.name || post.blog_category?.data?.attributes?.name || post.category || "Haber"}
+                        </span>
                         <span className="text-xs text-muted-foreground font-medium">{post.read_time || post.readTime || 5} Dk</span>
                     </div>
                   

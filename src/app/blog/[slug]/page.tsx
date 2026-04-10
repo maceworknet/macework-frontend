@@ -53,10 +53,12 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
     ? getStrapiMedia(post.cover_image.url)
     : "https://images.unsplash.com/photo-1498050108023-c5249f4df085?q=80&w=2000";
 
+  const categoryName = post.blog_category?.name || post.blog_category?.data?.attributes?.name || post.category || "Haber";
+  
   return (
     <main className="min-h-screen" suppressHydrationWarning>
       <SubPageHeader 
-        badge={`${post.blog_category?.name || "Haber"} / Blog`}
+        badge={`${categoryName} / Blog`}
         title={post.title}
         description={post.summary || post.excerpt || ""}
       >
@@ -90,15 +92,15 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                   </div>
                </article>
 
-                <div className="pt-10 border-t border-border/40 flex items-center flex-wrap gap-2">
+               <div className="pt-10 border-t border-border/40 flex items-center flex-wrap gap-2">
                   <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mr-1">Etiketler:</span>
                   <span className="text-[10px] px-3 py-1 bg-muted/50 border border-border/50 rounded-full font-bold">#MACEWORK</span>
                   {post.tags && post.tags.length > 0 ? (
                     post.tags.map((tag: any) => (
-                      <span key={tag.id} className="text-[10px] px-3 py-1 bg-muted/50 border border-border/50 rounded-full font-bold">#{tag.name.toUpperCase()}</span>
+                      <span key={tag.id} className="text-[10px] px-3 py-1 bg-muted/50 border border-border/50 rounded-full font-bold">#{(tag.name || tag.attributes?.name || "").toUpperCase()}</span>
                     ))
                   ) : (
-                    <span className="text-[10px] px-3 py-1 bg-muted/50 border border-border/50 rounded-full font-bold">#{(post.blog_category?.name || "Haber").toUpperCase()}</span>
+                    <span className="text-[10px] px-3 py-1 bg-muted/50 border border-border/50 rounded-full font-bold">#{categoryName.toUpperCase()}</span>
                   )}
                </div>
             </div>
@@ -127,7 +129,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                      </div>
                      <div className="flex justify-between items-center text-foreground">
                         <span className="text-muted-foreground text-[11px] font-bold uppercase tracking-widest flex items-center gap-2"><Tag className="w-3.5 h-3.5" /> Kategori</span>
-                        <span className="font-bold text-sm text-macework tracking-tight">{post.blog_category?.name || "Haber"}</span>
+                        <span className="font-bold text-sm text-macework tracking-tight">{categoryName}</span>
                      </div>
                   </div>
                   
