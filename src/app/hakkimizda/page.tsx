@@ -7,8 +7,15 @@ export const metadata = {
 };
 
 export default async function AboutPage() {
-  const data = await fetchStrapi('about-page', { populate: 'stats,image,content' }).catch(() => null);
-  const team = await fetchStrapi('team-members', { populate: '*' }).catch(() => []);
+  const data = await fetchStrapi<any>('about-page', { 
+    populate: {
+      stats: '*',
+      image: '*',
+      story: '*',
+      seo: '*'
+    }
+  }).catch(() => null);
+  const team = await fetchStrapi<any[]>('team-members', { populate: '*' }).catch(() => []);
   
   return <AboutClient strapiData={data} strapiTeam={team} />;
 }
