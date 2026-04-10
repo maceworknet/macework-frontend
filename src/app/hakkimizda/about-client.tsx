@@ -5,6 +5,7 @@ import { motion } from "framer-motion";
 import { Users, Target, Rocket, Heart } from "lucide-react";
 import Link from "next/link";
 import { BlocksRenderer } from "@strapi/blocks-react-renderer";
+import { getStrapiMedia } from "@/lib/strapi";
 
 export default function AboutClient({ strapiData, strapiTeam }: { strapiData?: any, strapiTeam?: any[] }) {
   // Turbopack AST Bug Fix: Pulling complex inline ternaries out of JSX brackets 
@@ -23,8 +24,8 @@ export default function AboutClient({ strapiData, strapiTeam }: { strapiData?: a
     <main className="min-h-screen">
       <SubPageHeader 
         badge="Hakkımızda"
-        title="Yenilikçi Teknoloji ve Tasarım Tutkusu"
-        description="Macework Creativ olarak biz, dijital dünyayı şekillendiren fikirlerin ve bu fikirleri hayata geçiren teknolojinin gücüne inanıyoruz."
+        title={strapiData?.heading || "Yenilikçi Teknoloji ve Tasarım Tutkusu"}
+        description={strapiData?.about_description || "Macework Creativ olarak biz, dijital dünyayı şekillendiren fikirlerin ve bu fikirleri hayata geçiren teknolojinin gücüne inanıyoruz."}
       />
 
       <section className="py-24 bg-background">
@@ -66,11 +67,19 @@ export default function AboutClient({ strapiData, strapiTeam }: { strapiData?: a
             </div>
 
             <div className="relative">
-               <div className="aspect-square rounded-[3rem] bg-muted overflow-hidden border border-border/50 relative shadow-2xl">
+               <div className="aspect-square rounded-[3rem] bg-muted overflow-hidden border border-border/50 relative shadow-2xl flex items-center justify-center">
                   <div className="absolute inset-0 bg-gradient-to-br from-macework/20 to-primary/20 blur-[100px] opacity-30" />
-                  <div className="w-full h-full flex items-center justify-center">
-                      <Heart className="w-32 h-32 text-macework animate-pulse opacity-20" />
-                  </div>
+                  {strapiData?.about_image ? (
+                    <img 
+                      src={getStrapiMedia(strapiData.about_image.url)} 
+                      alt={strapiData.heading} 
+                      className="w-full h-full object-cover relative z-10"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex items-center justify-center">
+                        <Heart className="w-32 h-32 text-macework animate-pulse opacity-20" />
+                    </div>
+                  )}
                </div>
                
                <div className="absolute -bottom-10 -left-10 grid grid-cols-2 gap-4">

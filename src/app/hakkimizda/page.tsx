@@ -10,7 +10,7 @@ export default async function AboutPage() {
   const data = await fetchStrapi<any>('about-page', { 
     populate: {
       stats: '*',
-      image: '*',
+      about_image: '*',
       story: '*',
       seo: '*'
     }
