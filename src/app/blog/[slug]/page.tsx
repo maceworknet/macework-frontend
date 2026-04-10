@@ -57,9 +57,9 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
   return (
     <main className="min-h-screen" suppressHydrationWarning>
       <SubPageHeader 
-        badge={`${post.category} / Blog`}
+        badge={`${post.blog_category?.name || "Haber"} / Blog`}
         title={post.title}
-        description={post.summary || post.excerpt}
+        description={post.summary || post.excerpt || ""}
       >
           <div className="flex items-center gap-6 mt-4">
              <Link 
@@ -94,7 +94,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                <div className="pt-10 border-t border-border/40 flex items-center flex-wrap gap-2">
                   <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mr-1">Etiketler:</span>
                   <span className="text-[10px] px-3 py-1 bg-muted/50 border border-border/50 rounded-full font-bold">#MACEWORK</span>
-                  <span className="text-[10px] px-3 py-1 bg-muted/50 border border-border/50 rounded-full font-bold">#{post.category.toUpperCase()}</span>
+                  <span className="text-[10px] px-3 py-1 bg-muted/50 border border-border/50 rounded-full font-bold">#{(post.blog_category?.name || "Haber").toUpperCase()}</span>
                </div>
             </div>
 
@@ -122,7 +122,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                      </div>
                      <div className="flex justify-between items-center text-foreground">
                         <span className="text-muted-foreground text-[11px] font-bold uppercase tracking-widest flex items-center gap-2"><Tag className="w-3.5 h-3.5" /> Kategori</span>
-                        <span className="font-bold text-sm text-macework tracking-tight">{post.category}</span>
+                        <span className="font-bold text-sm text-macework tracking-tight">{post.blog_category?.name || "Haber"}</span>
                      </div>
                   </div>
                   
