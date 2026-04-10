@@ -127,6 +127,7 @@ export default function ContactClient({ strapiSettings }: { strapiSettings?: any
                         <Button variant="outline" onClick={() => setStatus("idle")} className="rounded-full">Yeni Form Gönder</Button>
                     </motion.div>
                 ) : (
+                    <>
                     <div className="space-y-6 relative z-10 mb-8">
                         <div className="space-y-2">
                              <h3 className="text-2xl font-bold tracking-tight">{strapiSettings?.form_heading || "Yeni Bir Projeye Başlayalım"}</h3>
@@ -205,6 +206,7 @@ export default function ContactClient({ strapiSettings }: { strapiSettings?: any
                           </Button>
                         </div>
                     </form>
+                    </>
                 )}
             </div>
 
