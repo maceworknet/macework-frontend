@@ -45,8 +45,8 @@ export default function ContactClient({ strapiSettings }: { strapiSettings?: any
     <main className="min-h-screen overflow-x-hidden">
       <SubPageHeader 
         badge="İletişim"
-        title="Bize Ulaşın"
-        description="Fikrinizi ürüne dönüştürmek veya markanızı dijitalde büyütmek için ilk adımı atın. Kahve eşliğinde stratejinizi konuşalım."
+        title={strapiSettings?.heading || "Bize Ulaşın"}
+        description={strapiSettings?.subheading || "Fikrinizi ürüne dönüştürmek veya markanızı dijitalde büyütmek için ilk adımı atın. Kahve eşliğinde stratejinizi konuşalım."}
       />
 
       <section className="py-20 bg-background overflow-hidden">
@@ -127,6 +127,14 @@ export default function ContactClient({ strapiSettings }: { strapiSettings?: any
                         <Button variant="outline" onClick={() => setStatus("idle")} className="rounded-full">Yeni Form Gönder</Button>
                     </motion.div>
                 ) : (
+                    <div className="space-y-6 relative z-10 mb-8">
+                        <div className="space-y-2">
+                             <h3 className="text-2xl font-bold tracking-tight">{strapiSettings?.form_heading || "Yeni Bir Projeye Başlayalım"}</h3>
+                             <p className="text-muted-foreground text-sm leading-relaxed">
+                                 {strapiSettings?.form_subheading || "Fikrinizi ürüne dönüştürmek veya markanızı dijitalde büyütmek için ilk adımı atın."}
+                             </p>
+                        </div>
+                    </div>
                     <form onSubmit={handleSubmit} className="grid grid-cols-1 md:grid-cols-2 gap-6 relative z-10">
                         <div className="space-y-2">
                           <Label htmlFor="name">Ad Soyad</Label>
