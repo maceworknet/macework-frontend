@@ -37,8 +37,7 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
 
   console.log("Requested slug:", slug);
   const posts = await fetchStrapi<any[]>("blog-posts", {
-
-    populate: '*',
+    populate: ['blog_category', 'tags', 'cover_image', 'seo'],
     filters: { slug },
   });
 
@@ -91,10 +90,16 @@ export default async function BlogDetailPage({ params }: { params: Promise<{ slu
                   </div>
                </article>
 
-               <div className="pt-10 border-t border-border/40 flex items-center flex-wrap gap-2">
+                <div className="pt-10 border-t border-border/40 flex items-center flex-wrap gap-2">
                   <span className="text-[10px] font-black uppercase tracking-widest text-muted-foreground mr-1">Etiketler:</span>
                   <span className="text-[10px] px-3 py-1 bg-muted/50 border border-border/50 rounded-full font-bold">#MACEWORK</span>
-                  <span className="text-[10px] px-3 py-1 bg-muted/50 border border-border/50 rounded-full font-bold">#{(post.blog_category?.name || "Haber").toUpperCase()}</span>
+                  {post.tags && post.tags.length > 0 ? (
+                    post.tags.map((tag: any) => (
+                      <span key={tag.id} className="text-[10px] px-3 py-1 bg-muted/50 border border-border/50 rounded-full font-bold">#{tag.name.toUpperCase()}</span>
+                    ))
+                  ) : (
+                    <span className="text-[10px] px-3 py-1 bg-muted/50 border border-border/50 rounded-full font-bold">#{(post.blog_category?.name || "Haber").toUpperCase()}</span>
+                  )}
                </div>
             </div>
 

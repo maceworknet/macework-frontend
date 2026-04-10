@@ -9,7 +9,7 @@ export const metadata = {
 
 export default async function BlogPage() {
   const [posts, categories, globalSettings] = await Promise.all([
-    fetchStrapi<any[]>("blog-posts", { populate: '*' }),
+    fetchStrapi<any[]>("blog-posts", { populate: ['blog_category', 'tags', 'cover_image'] }),
     fetchStrapi<any[]>("blog-categories", { populate: '*' }).catch(() => []),
     fetchStrapi<any>("global-setting", { populate: '*' }).catch(() => null)
   ]);
